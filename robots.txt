@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://nookat.c6t.ru/sitemap.xml
+
+# Yandex
+User-agent: Yandex
+Allow: /
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
