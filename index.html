@@ -292,6 +292,45 @@
       .contact-grid{grid-template-columns:1fr}
       .profile-tabs{flex-wrap:wrap}
     }
+
+    /* ===== МОБИЛЬНЫЕ ДОРАБОТКИ ===== */
+
+/* Чат — мобильное переключение */
+.chat-back-btn{display:none;background:none;border:none;color:var(--primary);font-weight:700;font-size:.9rem;cursor:pointer;padding:0 0 12px;font-family:inherit;align-items:center;gap:6px}
+
+@media(max-width:768px){
+  /* Чат */
+  .chat-back-btn{display:flex}
+  .chat-layout{display:block;height:auto}
+  .chat-list{display:block;height:auto;max-height:none;border-radius:var(--radius);margin-bottom:12px}
+  .chat-window{min-height:420px;border-radius:var(--radius)}
+  .chat-messages{min-height:280px;max-height:340px}
+  .chat-list.hidden-mobile{display:none}
+  .chat-window.hidden-mobile{display:none}
+
+  /* Шапка — меньше gap на маленьких */
+  .header-inner{gap:6px;padding:8px 12px}
+  .lang-sw button{padding:4px 8px;font-size:.75rem}
+  .btn-reg{padding:6px 10px;font-size:.78rem}
+
+  /* Модалки — учитываем клавиатуру */
+  .overlay{align-items:flex-start;padding-top:8px}
+  .modal{max-height:95vh;border-radius:16px 16px 0 0;margin-top:auto}
+  .overlay.show{display:flex;flex-direction:column;justify-content:flex-end}
+
+  /* FAB не перекрывает контент */
+  body{padding-bottom:100px}
+
+  /* Карточки рынка на очень маленьких */
+  .market-card-price{font-size:1rem}
+  .market-card-title{font-size:.85rem}
+}
+
+@media(max-width:400px){
+  .market-grid{grid-template-columns:1fr}
+  .lang-sw{display:none} /* прячем переключатель языка если совсем мало места */
+  .logo-text h1{font-size:.95rem}
+}
   </style>
 </head>
 <body>
@@ -1688,6 +1727,24 @@ window.showToast = (type, text) => {
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
 };
+
+// Мобильный чат — переключение
+window.showChatList = () => {
+  document.getElementById('chatListPanel').classList.remove('hidden-mobile');
+  document.querySelector('.chat-window').classList.add('hidden-mobile');
+  document.getElementById('chatBackBtn').style.display = 'none';
+};
+
+// Скрываем список когда открываем чат на мобиле
+const _origOpenChat = window.openChat;
+window.openChat = async (...args) => {
+  await _origOpenChat(...args);
+  if(window.innerWidth <= 768){
+    document.getElementById('chatListPanel').classList.add('hidden-mobile');
+    document.querySelector('.chat-window').classList.remove('hidden-mobile');
+    document.getElementById('chatBackBtn').style.display = 'flex';
+  }
+}; 
 </script>
 </body>
 </html>
