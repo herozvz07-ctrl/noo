@@ -1272,10 +1272,26 @@ window.react = async (coll,id,field,btn) => {
 };
 
 // === УДАЛЕНИЕ ===
-window.delPost = async (coll,id) => {
-  if(!confirm('Удалить эту публикацию?')) return;
-  try { await deleteDoc(doc(db,coll,id)); _store.delete(coll[0]+'_'+id); showToast('ok','✅ Публикация удалена'); }
-  catch(e) { showToast('err','Не удалось удалить. Попробуйте снова.'); }
+window.delPost = async (coll, id) => {
+  // Проверяем права: либо автор, либо админ
+  const p = _store.get(coll[0]+'_'+id);
+  const isAdmin = _u?.uid === _A;
+  const isAuthor = _u?.uid === p?.authorId;
+
+  if (!isAdmin && !isAuthor) {
+    showToast('err', '❌ У вас нет прав для удаления');
+    return;
+  }
+
+  if (!confirm('Удалить эту публикацию?')) return;
+
+  try {
+    await deleteDoc(doc(db, coll, id));
+    _store.delete(coll[0]+'_'+id);
+    showToast('ok', '✅ Публикация удалена');
+  } catch(e) {
+    showToast('err', 'Не удалось удалить. Попробуйте снова.');
+  }
 };
 
 // === МОИ ПУБЛИКАЦИИ ===
