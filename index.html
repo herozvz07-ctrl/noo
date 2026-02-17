@@ -1197,6 +1197,25 @@ function renderJobs(jobs) {
     </div>`).join('');
 }
 
+// === СЧЁТЧИК ПРОСМОТРОВ ===
+// 1 пользователь = 1 просмотр, свои посты не считаются
+async function countView(coll, id, authorId) {
+  // Если это свой пост — не считаем
+  if (_u && _u.uid === authorId) return;
+
+  // Ключ для localStorage
+  const key = `viewed_${coll}_${id}`;
+
+  // Если уже смотрел — не считаем
+  if (localStorage.getItem(key)) return;
+
+  try {
+    await updateDoc(doc(db, coll, id), { views: increment(1) });
+    // Запоминаем что уже смотрел (на 7 дней)
+    localStorage.setItem(key, Date.now());
+  } catch(e) {}
+}
+  
 // === ОТКРЫТИЕ ПОСТОВ ===
 window.openNews = async (id) => {
   const p = _store.get('n_'+id); if(!p) return;
@@ -1209,7 +1228,6 @@ window.openNews = async (id) => {
   document.getElementById('postModalContacts').innerHTML='';
   document.getElementById('postChatBtn').style.display='none';
   openModal('postModal');
-  try { await updateDoc(doc(db,'posts',id),{views:increment(1)}); } catch(e){}
 };
 
 window.openMarket = async (id) => {
@@ -1227,7 +1245,6 @@ window.openMarket = async (id) => {
   document.getElementById('postModalContacts').innerHTML=c;
   document.getElementById('postChatBtn').style.display=(p.authorId&&_u&&p.authorId!==_u.uid)?'flex':'none';
   openModal('postModal');
-  try { await updateDoc(doc(db,'market',id),{views:increment(1)}); } catch(e){}
 };
 
 window.openJob = async (id) => {
@@ -1243,7 +1260,6 @@ window.openJob = async (id) => {
   document.getElementById('postModalContacts').innerHTML=c;
   document.getElementById('postChatBtn').style.display=(p.authorId&&_u&&p.authorId!==_u.uid)?'flex':'none';
   openModal('postModal');
-  try { await updateDoc(doc(db,'jobs',id),{views:increment(1)}); } catch(e){}
 };
 
 // === РЕАКЦИИ ===
