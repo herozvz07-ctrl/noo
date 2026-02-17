@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ноокат Новости - Жаңылыктар | Nookat News</title>
+  <meta name="description" content="Ноокат Новости - главный портал Ноокатского района. Новости, рынок, вакансии.">
+  <meta name="keywords" content="ноокат новости, ноокат жаңылыктары, nookat news, рынок ноокат, вакансии ноокат">
+  <meta property="og:title" content="Ноокат Новости - Nookat News">
+  <meta property="og:description" content="Актуальные новости, рынок и вакансии Ноокатского района">
+  <meta property="og:url" content="https://nookat.c6t.ru">
+  <meta property="og:image" content="https://nookat.c6t.ru/images/nookatday.jpg">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#2563eb">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    :root{
+      --primary:#2563eb;--primary-light:#3b82f6;--primary-dark:#1d4ed8;
+      --bg:#f0f4ff;--card:#fff;--text:#0f172a;--text2:#64748b;
+      --border:#e2e8f0;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;
+      --purple:#7c3aed;--orange:#f97316;
+      --shadow:0 1px 15px rgba(0,0,0,.06);--shadow2:0 4px 30px rgba(0,0,0,.1);
+      --radius:16px;--radius-sm:10px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;padding-bottom:90px;overflow-x:hidden}
+    body.dark{--bg:#0b0f1a;--card:#141926;--text:#f1f5f9;--text2:#94a3b8;--border:#1e293b;--shadow:0 1px 15px rgba(0,0,0,.3)}
+
+    /* ШАПКА */
+    header{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:0;z-index:500;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+    body.dark header{background:rgba(20,25,38,.97)}
+    .header-inner{max-width:1100px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .logo{display:flex;align-items:center;gap:9px;cursor:pointer;flex-shrink:0;min-width:0}
+    .logo-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2.5px solid var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.15);flex-shrink:0}
+    .logo-text{min-width:0}
+    .logo-text h1{font-size:1rem;font-weight:900;color:var(--primary);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .logo-text span{font-size:.65rem;color:var(--text2);font-weight:600}
+    .header-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .lang-sw{display:flex;background:var(--bg);border-radius:20px;padding:2px;gap:1px}
+    .lang-sw button{background:none;border:none;padding:4px 9px;border-radius:15px;cursor:pointer;font-weight:700;font-size:.75rem;color:var(--text2);font-family:inherit;transition:.2s}
+    .lang-sw button.on{background:var(--primary);color:#fff}
+    .icon-btn{width:34px;height:34px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:.2s;color:var(--text)}
+    .icon-btn:hover{background:var(--primary);color:#fff}
+    .auth-btns{display:flex;gap:5px}
+    .btn-login{padding:6px 12px;border:2px solid var(--primary);background:none;color:var(--primary);border-radius:20px;cursor:pointer;font-weight:700;font-size:.78rem;font-family:inherit;transition:.2s;white-space:nowrap}
+    .btn-login:hover{background:var(--primary);color:#fff}
+    .btn-reg{padding:6px 12px;background:var(--primary);color:#fff;border:none;border-radius:20px;cursor:pointer;font-weight:700;font-size:.78rem;font-family:inherit;transition:.2s;white-space:nowrap}
+    .btn-reg:hover{background:var(--primary-dark)}
+    .user-avatar-btn{width:34px;height:34px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid var(--primary);display:none;flex-shrink:0}
+
+    /* НАВИГАЦИЯ */
+    nav{background:var(--card);border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px}
+    .nav-inner::-webkit-scrollbar{display:none}
+    .nav-tab{padding:12px 15px;border:none;background:none;cursor:pointer;font-weight:700;font-size:.84rem;color:var(--text2);white-space:nowrap;border-bottom:3px solid transparent;transition:.2s;display:flex;align-items:center;gap:5px;font-family:inherit}
+    .nav-tab:hover{color:var(--primary)}
+    .nav-tab.on{color:var(--primary);border-bottom-color:var(--primary)}
+
+    /* КОНТЕЙНЕР */
+    .container{max-width:1100px;margin:0 auto;padding:16px 14px}
+    .section{display:none;animation:fadeUp .3s ease}
+    .section.on{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+    /* НОВОСТИ */
+    .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    .news-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;position:relative}
+    .news-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
+    .news-card-img{width:100%;height:185px;object-fit:cover;display:block;background:var(--bg)}
+    .news-card-body{padding:14px}
+    .news-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+    .news-card-date{font-size:.73rem;color:var(--text2);font-weight:600}
+    .news-card-badge{font-size:.66rem;font-weight:800;background:var(--primary);color:#fff;padding:2px 8px;border-radius:10px}
+    .news-card h3{font-size:.97rem;font-weight:800;margin-bottom:6px;line-height:1.4;cursor:pointer}
+    .news-card h3:hover{color:var(--primary)}
+    .news-card-text{font-size:.83rem;color:var(--text2);margin-bottom:11px;line-height:1.5}
+    .news-card-footer{display:flex;align-items:center;justify-content:space-between}
+    .reactions{display:flex;gap:4px}
+    .reaction-btn{background:var(--bg);border:none;padding:5px 8px;border-radius:20px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;gap:3px;color:var(--text2);font-weight:600;transition:.2s;font-family:inherit}
+    .reaction-btn:hover,.reaction-btn.active{background:var(--primary);color:#fff}
+    .post-stats{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--text2)}
+    .three-dots{position:absolute;top:9px;right:9px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.45);border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;z-index:2}
+    .three-dots:hover{background:rgba(0,0,0,.7)}
+
+    /* DROPDOWN */
+    .dropdown{position:absolute;top:42px;right:9px;background:var(--card);border-radius:12px;box-shadow:var(--shadow2);z-index:100;min-width:165px;overflow:hidden;display:none;border:1px solid var(--border)}
+    .dropdown.show{display:block;animation:fadeUp .2s ease}
+    .dropdown-item{padding:11px 15px;display:flex;align-items:center;gap:9px;cursor:pointer;font-size:.86rem;font-weight:600;transition:.15s;color:var(--text)}
+    .dropdown-item:hover{background:var(--bg)}
+    .dropdown-item.red{color:var(--danger)}
+    .dropdown-item.red:hover{background:#fef2f2}
+
+    /* МОДАЛКИ */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:0}
+    .overlay.show{display:flex;animation:fadeOverlay .25s ease}
+    @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+    .modal{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:94vh;overflow-y:auto;position:relative;box-shadow:var(--shadow2);animation:slideUp .3s ease}
+    @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+    .modal-lg{max-width:680px}
+    .modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0}
+    .modal-header{padding:16px 18px 0;display:flex;align-items:center;justify-content:space-between}
+    .modal-header h2{font-size:1.2rem;font-weight:900}
+    .close-btn{width:30px;height:30px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;color:var(--text);transition:.2s}
+    .close-btn:hover{background:var(--danger);color:#fff}
+    .modal-body{padding:16px 18px 30px}
+
+    /* ФОРМА */
+    .form-group{margin-bottom:13px}
+    .form-group label{display:block;font-weight:700;font-size:.83rem;margin-bottom:5px;color:var(--text)}
+    .form-input,.form-textarea,.form-select{width:100%;padding:11px 13px;border:2px solid var(--border);border-radius:11px;font-size:.9rem;font-family:inherit;background:var(--card);color:var(--text);transition:.2s;-webkit-appearance:none}
+    .form-input:focus,.form-textarea:focus,.form-select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+    .form-textarea{resize:vertical;min-height:85px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .file-drop{border:2px dashed var(--border);border-radius:11px;padding:18px;text-align:center;cursor:pointer;transition:.2s;position:relative;background:var(--bg)}
+    .file-drop:hover{border-color:var(--primary);background:rgba(37,99,235,.04)}
+    .file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .file-drop-icon{font-size:1.8rem;color:var(--text2);margin-bottom:5px}
+    .file-drop p{font-size:.83rem;color:var(--text2);font-weight:600}
+    .img-preview{width:100%;border-radius:10px;margin-top:10px;display:none;max-height:200px;object-fit:cover}
+    .btn-full{width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:.93rem;cursor:pointer;font-family:inherit;transition:.2s}
+    .btn-full:hover{background:var(--primary-dark)}
+    .btn-full:disabled{opacity:.55;cursor:not-allowed}
+    .btn-secondary-full{width:100%;padding:11px;background:var(--bg);color:var(--text);border:2px solid var(--border);border-radius:12px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+    .btn-secondary-full:hover{border-color:var(--primary);color:var(--primary)}
+    .divider{display:flex;align-items:center;gap:11px;margin:14px 0;color:var(--text2);font-size:.8rem;font-weight:600}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+    .social-auth{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .social-btn{padding:11px;border:2px solid var(--border);background:var(--card);border-radius:11px;cursor:pointer;font-weight:700;font-size:.84rem;display:flex;align-items:center;justify-content:center;gap:7px;font-family:inherit;transition:.2s;color:var(--text)}
+    .social-btn:hover{border-color:var(--primary)}
+    .switch-link{text-align:center;margin-top:13px;font-size:.83rem;color:var(--text2)}
+    .switch-link a{color:var(--primary);cursor:pointer;font-weight:700}
+    .error-box{background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;padding:10px 13px;margin-top:8px;display:none;align-items:flex-start;gap:8px}
+    .error-box.show{display:flex}
+    .error-box i{color:var(--danger);margin-top:2px;flex-shrink:0}
+    .error-box span{font-size:.83rem;color:#b91c1c;font-weight:600;line-height:1.4}
+    .success-box{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:10px 13px;margin-top:8px;display:none;align-items:flex-start;gap:8px}
+    .success-box.show{display:flex}
+    .success-box i{color:var(--success);margin-top:2px;flex-shrink:0}
+    .success-box span{font-size:.83rem;color:#166534;font-weight:600}
+    .phone-row{display:flex;gap:7px}
+    .country-code{width:90px;flex-shrink:0}
+    .strength-bar{height:4px;border-radius:2px;background:var(--border);margin-top:6px;overflow:hidden}
+    .strength-fill{height:100%;border-radius:2px;transition:.3s;width:0}
+    .avatar-upload{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+    .avatar-preview-circle{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:var(--bg);flex-shrink:0}
+    .avatar-upload-btn{padding:8px 14px;background:var(--bg);border:2px solid var(--border);border-radius:10px;cursor:pointer;font-weight:700;font-size:.8rem;font-family:inherit;position:relative;overflow:hidden;color:var(--text)}
+    .avatar-upload-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+    /* ПРОГРЕСС ЗАГРУЗКИ */
+    .upload-progress{background:var(--bg);border-radius:9px;padding:10px 13px;margin-bottom:10px;display:none}
+    .upload-progress-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:5px}
+    .upload-progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--purple));border-radius:3px;transition:.2s;width:0}
+    .upload-progress-text{font-size:.78rem;color:var(--text2);font-weight:700}
+
+    /* РЫНОК */
+    .market-cats{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:3px;margin-bottom:16px}
+    .market-cats::-webkit-scrollbar{display:none}
+    .cat-btn{padding:8px 16px;border:2px solid var(--border);background:var(--card);border-radius:25px;cursor:pointer;font-weight:700;font-size:.83rem;white-space:nowrap;font-family:inherit;color:var(--text);transition:.2s;display:flex;align-items:center;gap:5px;flex-shrink:0}
+    .cat-btn:hover{border-color:var(--primary);color:var(--primary)}
+    .cat-btn.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:15px}
+    .market-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;cursor:pointer;position:relative}
+    .market-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
+    .market-card-img{width:100%;height:175px;object-fit:cover;background:var(--bg)}
+    .market-card-body{padding:12px}
+    .market-card-price{font-size:1.1rem;font-weight:900;color:var(--primary);margin-bottom:4px}
+    .market-card-title{font-size:.88rem;font-weight:700;margin-bottom:5px}
+    .market-card-loc{font-size:.76rem;color:var(--text2);display:flex;align-items:center;gap:3px}
+    .market-card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-top:9px;border-top:1px solid var(--border)}
+    .market-card-seller{display:flex;align-items:center;gap:5px;font-size:.76rem;color:var(--text2);font-weight:600}
+    .seller-ava{width:20px;height:20px;border-radius:50%;object-fit:cover;background:var(--border)}
+
+    /* ВАКАНСИИ */
+    .jobs-list{display:flex;flex-direction:column;gap:13px}
+    .job-card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);transition:.3s;cursor:pointer;position:relative}
+    .job-card:hover{transform:translateY(-2px);box-shadow:var(--shadow2)}
+    .job-header{display:flex;align-items:flex-start;justify-content:space-between;gap:11px;margin-bottom:9px}
+    .job-title{font-size:1rem;font-weight:800}
+    .job-salary{font-size:.95rem;font-weight:900;color:var(--success);white-space:nowrap}
+    .job-company{font-size:.83rem;color:var(--text2);font-weight:600;margin-bottom:7px}
+    .job-tags{display:flex;gap:5px;flex-wrap:wrap}
+    .job-tag{padding:3px 9px;background:var(--bg);border-radius:9px;font-size:.73rem;font-weight:700;color:var(--text2)}
+    .job-foot{display:flex;align-items:center;justify-content:space-between;margin-top:11px;padding-top:11px;border-top:1px solid var(--border)}
+    .job-date{font-size:.73rem;color:var(--text2)}
+
+    /* О ГОРОДЕ */
+    .about-card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+    .about-card h2{font-size:1.35rem;font-weight:900;color:var(--primary);margin-bottom:12px}
+    .about-card p{color:var(--text2);line-height:1.8;margin-bottom:11px;font-size:.93rem}
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:13px}
+    .contact-item{background:var(--card);border-radius:var(--radius);padding:18px;text-align:center;box-shadow:var(--shadow);transition:.3s}
+    .contact-item:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
+    .contact-item-icon{font-size:2rem;margin-bottom:9px}
+    .contact-item h4{font-size:.92rem;font-weight:800;margin-bottom:5px}
+    .contact-item a{color:var(--primary);font-weight:700;font-size:.87rem;text-decoration:none}
+    .contact-item a:hover{text-decoration:underline}
+    .contact-item p{font-size:.77rem;color:var(--text2);margin-top:4px}
+
+    /* ПРОФИЛЬ */
+    .profile-header{background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:var(--radius);padding:26px;text-align:center;color:#fff;margin-bottom:16px;box-shadow:var(--shadow2)}
+    .profile-ava{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.5);margin:0 auto 11px;display:block}
+    .profile-name{font-size:1.3rem;font-weight:900;margin-bottom:3px}
+    .profile-email{font-size:.83rem;opacity:.8}
+    .profile-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+    .profile-tab{padding:8px 16px;background:var(--card);border:2px solid var(--border);border-radius:20px;cursor:pointer;font-weight:700;font-size:.8rem;font-family:inherit;color:var(--text);transition:.2s}
+    .profile-tab.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .my-posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:13px}
+    .my-post-card{background:var(--card);border-radius:var(--radius-sm);padding:13px;box-shadow:var(--shadow);position:relative}
+    .my-post-card-title{font-weight:800;font-size:.88rem;margin-bottom:5px;padding-right:30px}
+    .my-post-card-type{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:8px;background:var(--bg);color:var(--text2);display:inline-block;margin-bottom:7px}
+    .my-post-del{position:absolute;top:9px;right:9px;width:26px;height:26px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;color:var(--danger);display:flex;align-items:center;justify-content:center;font-size:.82rem;transition:.2s}
+    .my-post-del:hover{background:var(--danger);color:#fff}
+
+    /* ЧАТ */
+    .chat-back-btn{display:none;background:none;border:none;color:var(--primary);font-weight:700;font-size:.88rem;cursor:pointer;padding:0 0 12px;font-family:inherit;align-items:center;gap:6px}
+    .chat-layout{display:grid;grid-template-columns:270px 1fr;gap:15px;height:calc(100vh - 190px);max-height:620px}
+    .chat-list{background:var(--card);border-radius:var(--radius);overflow-y:auto;box-shadow:var(--shadow)}
+    .chat-list-header{padding:13px;border-bottom:1px solid var(--border);font-weight:800;font-size:.92rem}
+    .chat-item{display:flex;align-items:center;gap:9px;padding:11px 13px;cursor:pointer;transition:.15s;border-bottom:1px solid var(--border)}
+    .chat-item:hover,.chat-item.on{background:rgba(37,99,235,.06)}
+    .chat-item-ava{width:38px;height:38px;border-radius:50%;object-fit:cover;background:var(--border);flex-shrink:0}
+    .chat-item-info{flex:1;min-width:0}
+    .chat-item-name{font-weight:700;font-size:.86rem}
+    .chat-item-last{font-size:.74rem;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .chat-item-time{font-size:.7rem;color:var(--text2);white-space:nowrap}
+    .chat-window{background:var(--card);border-radius:var(--radius);display:flex;flex-direction:column;box-shadow:var(--shadow);overflow:hidden}
+    .chat-win-header{padding:13px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px}
+    .chat-win-header-ava{width:34px;height:34px;border-radius:50%;background:var(--border);flex-shrink:0;background-size:cover;background-position:center}
+    .chat-win-header-name{font-weight:800;font-size:.92rem}
+    .chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;background:var(--bg)}
+    .msg{max-width:75%;display:flex;flex-direction:column;gap:3px}
+    .msg.mine{align-self:flex-end;align-items:flex-end}
+    .msg.other{align-self:flex-start}
+    .msg-bubble{padding:9px 13px;border-radius:16px;font-size:.86rem;line-height:1.5;word-break:break-word}
+    .msg.mine .msg-bubble{background:var(--primary);color:#fff;border-bottom-right-radius:4px}
+    .msg.other .msg-bubble{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px}
+    .msg-time{font-size:.66rem;color:var(--text2)}
+    .msg-img{max-width:200px;border-radius:11px;cursor:pointer}
+    .chat-input-area{padding:11px 13px;border-top:1px solid var(--border);display:flex;gap:7px;align-items:center}
+    .chat-input{flex:1;padding:9px 13px;border:2px solid var(--border);border-radius:25px;font-size:.86rem;font-family:inherit;background:var(--bg);color:var(--text);transition:.2s}
+    .chat-input:focus{outline:none;border-color:var(--primary)}
+    .chat-send{width:38px;height:38px;border-radius:50%;background:var(--primary);border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:.2s;flex-shrink:0}
+    .chat-send:hover{background:var(--primary-dark)}
+    .chat-attach{width:34px;height:34px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:.95rem;position:relative;overflow:hidden;flex-shrink:0}
+    .chat-attach input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .chat-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text2);gap:9px}
+    .chat-empty i{font-size:2.8rem;opacity:.25}
+
+    /* ТОСТ */
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);padding:12px 18px;border-radius:50px;box-shadow:0 4px 30px rgba(0,0,0,.15);align-items:center;gap:9px;z-index:2000;font-weight:700;font-size:.86rem;max-width:90vw;display:none;white-space:nowrap;border:1px solid var(--border)}
+    .toast.show{display:flex;animation:fadeUp .3s ease}
+    .toast.ok{border-color:var(--success);color:var(--success)}
+    .toast.err{border-color:var(--danger);color:var(--danger)}
+    .toast.warn{border-color:var(--warn);color:var(--warn)}
+
+    /* FAB */
+    .fab{position:fixed;bottom:26px;right:22px;width:50px;height:50px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:1.3rem;box-shadow:0 4px 18px rgba(37,99,235,.4);z-index:400;display:flex;align-items:center;justify-content:center;transition:.3s}
+    .fab:hover{transform:scale(1.1);background:var(--primary-dark)}
+    .scroll-up{position:fixed;bottom:88px;right:22px;width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--primary);border:2px solid var(--primary);cursor:pointer;font-size:.95rem;box-shadow:var(--shadow);z-index:399;display:none;align-items:center;justify-content:center;transition:.3s}
+    .scroll-up.show{display:flex}
+    .scroll-up:hover{background:var(--primary);color:#fff}
+
+    /* ЛОАДЕР */
+    .loader{text-align:center;padding:40px;color:var(--text2)}
+    .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 11px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty{text-align:center;padding:46px;color:var(--text2)}
+    .empty i{font-size:2.8rem;opacity:.25;margin-bottom:11px;display:block}
+
+    /* ПОИСК */
+    .search-bar{display:flex;gap:7px;margin-bottom:16px}
+    .search-bar input{flex:1;padding:10px 15px;border:2px solid var(--border);border-radius:12px;font-size:.88rem;font-family:inherit;background:var(--card);color:var(--text);transition:.2s}
+    .search-bar input:focus{outline:none;border-color:var(--primary)}
+
+    /* ПОСТ ДЕТАЛИ */
+    .post-contact-row{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+    .post-contact-row i{width:20px;color:var(--primary);flex-shrink:0}
+    .post-contact-row a{color:var(--primary);font-weight:700;text-decoration:none}
+    .open-chat-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border:none;border-radius:12px;font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:13px;transition:.2s}
+    .open-chat-btn:hover{opacity:.9}
+
+    /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+    @media(max-width:768px){
+      body{padding-bottom:100px}
+      .chat-back-btn{display:flex}
+      .chat-layout{display:block;height:auto}
+      .chat-list{border-radius:var(--radius);margin-bottom:12px;max-height:280px}
+      .chat-window{min-height:400px;border-radius:var(--radius)}
+      .chat-messages{min-height:260px;max-height:320px}
+      .chat-list.mob-hide{display:none}
+      .chat-window.mob-hide{display:none}
+      .news-grid{grid-template-columns:1fr}
+      .market-grid{grid-template-columns:repeat(2,1fr)}
+      .form-row{grid-template-columns:1fr}
+      .social-auth{grid-template-columns:1fr}
+      .logo-text span{display:none}
+      .auth-btns .btn-login{display:none}
+      .contact-grid{grid-template-columns:1fr 1fr}
+      .fab{bottom:18px;right:16px;width:46px;height:46px;font-size:1.2rem}
+      .scroll-up{bottom:76px;right:16px;width:35px;height:35px}
+      .modal{max-height:92vh}
+      .nav-tab{padding:11px 13px;font-size:.8rem}
+      .my-posts-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){
+      .market-grid{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      .header-inner{padding:8px 10px;gap:7px}
+      .logo-avatar{width:36px;height:36px}
+      .logo-text h1{font-size:.92rem}
+      .lang-sw button{padding:3px 7px;font-size:.7rem}
+      .btn-reg{padding:5px 10px;font-size:.74rem}
+      .icon-btn{width:30px;height:30px;font-size:.88rem}
+    }
+    @media(max-width:360px){
+      .lang-sw{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo" onclick="goTab('news')">
+      <img src="images/nookatday.jpg" alt="Nookat" class="logo-avatar" id="logoAva">
+      <div class="logo-text">
+        <h1 data-ru="Ноокат Новости" data-kg="Ноокат Жаңылыктары">Ноокат Новости</h1>
+        <span data-ru="Главный портал района" data-kg="Райондун башкы порталы">Главный портал района</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="lang-sw">
+        <button data-lang="ru" class="on">RU</button>
+        <button data-lang="kg">KG</button>
+      </div>
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Тема">🌙</button>
+      <div class="auth-btns" id="guestBtns">
+        <button class="btn-login" onclick="openModal('loginModal')">Войти</button>
+        <button class="btn-reg" onclick="openModal('regModal')">Регистрация</button>
+      </div>
+      <img src="https://ui-avatars.com/api/?name=U&background=2563eb&color=fff"
+           class="user-avatar-btn" id="userAvaBtn" onclick="handleAvaClick()" title="Профиль">
+    </div>
+  </div>
+  <nav>
+    <div class="nav-inner">
+      <button class="nav-tab on" data-tab="news" onclick="goTab('news')"><i class="fas fa-newspaper"></i> <span data-ru="Новости" data-kg="Жаңылыктар">Новости</span></button>
+      <button class="nav-tab" data-tab="market" onclick="goTab('market')"><i class="fas fa-store"></i> <span data-ru="Рынок" data-kg="Базар">Рынок</span></button>
+      <button class="nav-tab" data-tab="jobs" onclick="goTab('jobs')"><i class="fas fa-briefcase"></i> <span data-ru="Вакансии" data-kg="Вакансиялар">Вакансии</span></button>
+      <button class="nav-tab" data-tab="chat" onclick="goTab('chat')"><i class="fas fa-comments"></i> <span data-ru="Чат" data-kg="Чат">Чат</span></button>
+      <button class="nav-tab" data-tab="about" onclick="goTab('about')"><i class="fas fa-city"></i> <span data-ru="О городе" data-kg="Шаар жөнүндө">О городе</span></button>
+      <button class="nav-tab" data-tab="contacts" onclick="goTab('contacts')"><i class="fas fa-address-book"></i> <span data-ru="Контакты" data-kg="Байланыштар">Контакты</span></button>
+    </div>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- НОВОСТИ -->
+  <div class="section on" id="sec-news">
+    <div class="search-bar">
+      <input type="text" id="newsSearch" placeholder="🔍 Поиск новостей..." oninput="filterPosts()">
+    </div>
+    <div class="loader" id="newsLoader"><div class="spinner"></div><p>Загрузка...</p></div>
+    <div class="news-grid" id="newsGrid"></div>
+    <div class="empty" id="newsEmpty" style="display:none"><i class="fas fa-newspaper"></i><p>Новостей пока нет</p></div>
+  </div>
+
+  <!-- РЫНОК -->
+  <div class="section" id="sec-market">
+    <div class="market-cats">
+      <button class="cat-btn on" data-cat="all"><i class="fas fa-th"></i> <span data-ru="Все" data-kg="Баары">Все</span></button>
+      <button class="cat-btn" data-cat="tech"><i class="fas fa-laptop"></i> <span data-ru="Техника" data-kg="Техника">Техника</span></button>
+      <button class="cat-btn" data-cat="land"><i class="fas fa-map-marked-alt"></i> <span data-ru="Участки" data-kg="Участоктор">Участки</span></button>
+      <button class="cat-btn" data-cat="acc"><i class="fas fa-gem"></i> <span data-ru="Аксессуары" data-kg="Аксессуарлар">Аксессуары</span></button>
+      <button class="cat-btn" data-cat="cars"><i class="fas fa-car"></i> <span data-ru="Машины" data-kg="Унаалар">Машины</span></button>
+      <button class="cat-btn" data-cat="animals"><i class="fas fa-paw"></i> <span data-ru="Животные" data-kg="Жаныбарлар">Животные</span></button>
+      <button class="cat-btn" data-cat="materials"><i class="fas fa-hammer"></i> <span data-ru="Материалы" data-kg="Материалдар">Материалы</span></button>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="marketSearch" placeholder="🔍 Поиск товаров..." oninput="filterMarket()">
+    </div>
+    <div class="loader" id="marketLoader"><div class="spinner"></div><p>Загрузка...</p></div>
+    <div class="market-grid" id="marketGrid"></div>
+    <div class="empty" id="marketEmpty" style="display:none"><i class="fas fa-store"></i><p data-ru="Объявлений пока нет" data-kg="Жарыялоолор жок">Объявлений пока нет</p></div>
+  </div>
+
+  <!-- ВАКАНСИИ -->
+  <div class="section" id="sec-jobs">
+    <div class="search-bar">
+      <input type="text" id="jobsSearch" placeholder="🔍 Поиск вакансий..." oninput="filterJobs()">
+    </div>
+    <div class="loader" id="jobsLoader"><div class="spinner"></div><p>Загрузка...</p></div>
+    <div class="jobs-list" id="jobsList"></div>
+    <div class="empty" id="jobsEmpty" style="display:none"><i class="fas fa-briefcase"></i><p data-ru="Вакансий пока нет" data-kg="Вакансиялар жок">Вакансий пока нет</p></div>
+  </div>
+
+  <!-- ЧАТ -->
+  <div class="section" id="sec-chat">
+    <div id="chatAuth" style="display:none" class="empty">
+      <i class="fas fa-lock"></i>
+      <p data-ru="Для доступа к чату нужно войти" data-kg="Чатка кирүү үчүн авторизация керек">Для доступа к чату нужно войти</p>
+      <button class="btn-full" style="max-width:200px;margin:12px auto 0" onclick="openModal('loginModal')">Войти</button>
+    </div>
+    <div id="chatSection" style="display:none">
+      <button class="chat-back-btn" id="chatBackBtn" onclick="showChatList()">
+        <i class="fas fa-arrow-left"></i> Назад к чатам
+      </button>
+      <div class="chat-layout" id="chatLayout">
+        <div class="chat-list" id="chatListPanel">
+          <div class="chat-list-header">💬 Сообщения</div>
+          <div id="chatListItems"></div>
+        </div>
+        <div class="chat-window" id="chatWindowPanel">
+          <div class="chat-empty" id="chatEmpty"><i class="fas fa-comments"></i><p>Выберите чат</p></div>
+          <div id="chatActive" style="display:none;height:100%;flex-direction:column">
+            <div class="chat-win-header">
+              <div class="chat-win-header-ava" id="chatWinAva"></div>
+              <div class="chat-win-header-name" id="chatWinName"></div>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-area">
+              <button class="chat-attach" title="Прикрепить фото">
+                <i class="fas fa-paperclip"></i>
+                <input type="file" accept="image/*" onchange="sendImg(event)">
+              </button>
+              <input class="chat-input" id="msgInput" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')sendMsg()">
+              <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- О ГОРОДЕ -->
+  <div class="section" id="sec-about">
+    <div class="about-card">
+      <h2><i class="fas fa-city"></i> <span data-ru="О городе Ноокат" data-kg="Ноокат шаары жөнүндө">О городе Ноокат</span></h2>
+      <p data-ru="Ноокат — административный центр Ноокатского района Ошской области Кыргызстана. Расположен в юго-западной части страны." data-kg="Ноокат — Кыргызстандын Ош областынын Ноокат районунун административдик борбору.">Ноокат — административный центр Ноокатского района Ошской области Кыргызстана. Расположен в юго-западной части страны.</p>
+      <p data-ru="Город известен своей богатой историей, культурным наследием и гостеприимными жителями. Ноокат играет важную роль в экономической жизни региона." data-kg="Шаар өзүнүн бай тарыхы жана меймандос жашоочулары менен белгилүү.">Город известен своей богатой историей, культурным наследием и гостеприимными жителями.</p>
+    </div>
+  </div>
+
+  <!-- КОНТАКТЫ -->
+  <div class="section" id="sec-contacts">
+    <div class="about-card">
+      <h2><i class="fas fa-phone"></i> <span data-ru="Свяжитесь с нами" data-kg="Биз менен байланышыңыз">Свяжитесь с нами</span></h2>
+      <p data-ru="Есть новость или предложение? Пишите нам!" data-kg="Жаңылык же сунуш барбы?">Есть новость или предложение? Пишите нам!</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-item"><div class="contact-item-icon"><i class="fab fa-telegram" style="color:#0088cc"></i></div><h4>Telegram</h4><a href="https://t.me/Nookat_day" target="_blank">@Nookat_day</a><p data-ru="Официальный канал" data-kg="Расмий канал">Официальный канал</p></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fab fa-instagram" style="color:#e1306c"></i></div><h4>Instagram</h4><a href="https://instagram.com/nookat.news" target="_blank">@nookat.news</a><p data-ru="Следите за нами" data-kg="Биздин Instagram">Следите за нами</p></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fab fa-whatsapp" style="color:#25d366"></i></div><h4>WhatsApp</h4><a href="https://wa.me/+996701775688" target="_blank">+996 701 775 688</a><p data-ru="Напишите нам" data-kg="Бизге жазыңыз">Напишите нам</p></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-envelope" style="color:var(--primary)"></i></div><h4>Email</h4><a href="mailto:nookat.nws@gmail.com">nookat.nws@gmail.com</a><p data-ru="Деловые запросы" data-kg="Иш суроолору">Деловые запросы</p></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-phone" style="color:var(--success)"></i></div><h4>Телефон</h4><a href="tel:+996701775688">+996 701 775 688</a><p data-ru="Звоните в любое время" data-kg="Каалаган убакта чалыңыз">Звоните в любое время</p></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-map-marker-alt" style="color:var(--danger)"></i></div><h4>Адрес</h4><p style="color:var(--text);font-weight:700" data-ru="г. Ноокат, Ошская область" data-kg="Ноокат, Ош областы">г. Ноокат, Ошская область</p></div>
+    </div>
+  </div>
+
+  <!-- ПРОФИЛЬ -->
+  <div class="section" id="sec-profile">
+    <div class="profile-header">
+      <img src="https://ui-avatars.com/api/?name=U&background=2563eb&color=fff" class="profile-ava" id="profileAva">
+      <div class="profile-name" id="profileName">Пользователь</div>
+      <div class="profile-email" id="profileEmail"></div>
+    </div>
+    <div class="profile-tabs">
+      <button class="profile-tab on" onclick="switchProfileTab('myPosts',this)">📋 Мои публикации</button>
+      <button class="profile-tab" onclick="switchProfileTab('settings',this)">⚙️ Настройки</button>
+      <button class="profile-tab" onclick="logout()" style="color:var(--danger)">🚪 Выйти</button>
+    </div>
+    <div id="profileMyPosts">
+      <div class="loader" id="myPostsLoader" style="display:none"><div class="spinner"></div><p>Загрузка...</p></div>
+      <div class="my-posts-grid" id="myPostsGrid"></div>
+      <div class="empty" id="myPostsEmpty" style="display:none"><i class="fas fa-folder-open"></i><p>Вы ещё ничего не публиковали</p></div>
+    </div>
+    <div id="profileSettings" style="display:none">
+      <div class="about-card">
+        <h2>⚙️ Настройки профиля</h2>
+        <div class="avatar-upload">
+          <img src="https://ui-avatars.com/api/?name=U&background=2563eb&color=fff" class="avatar-preview-circle" id="settingsAvaPreview">
+          <button class="avatar-upload-btn">📷 Сменить фото<input type="file" accept="image/*" onchange="changeProfilePhoto(event)"></button>
+        </div>
+        <div class="form-group"><label>Имя</label><input class="form-input" id="settingsName" placeholder="Ваше имя"></div>
+        <div class="form-group"><label>Фамилия</label><input class="form-input" id="settingsSurname" placeholder="Ваша фамилия"></div>
+        <div class="form-group"><label>Новый пароль</label><input class="form-input" type="password" id="settingsPass" placeholder="Оставьте пустым — пароль не изменится"></div>
+        <button class="btn-full" onclick="saveSettings()">💾 Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fabBtn" onclick="handleFab()" title="Добавить публикацию"><i class="fas fa-plus"></i></button>
+<button class="scroll-up" id="scrollUp" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+<!-- ВХОД -->
+<div class="overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2>👋 Войти в аккаунт</h2>
+      <button class="close-btn" onclick="closeModal('loginModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="social-auth">
+        <button class="social-btn" onclick="googleLogin()"><i class="fab fa-google" style="color:#ea4335"></i> Google</button>
+        <button class="social-btn" onclick="openModal('phoneModal');closeModal('loginModal')"><i class="fas fa-phone" style="color:var(--success)"></i> По номеру</button>
+      </div>
+      <div class="divider">или через email</div>
+      <div class="form-group"><label>Email</label><input class="form-input" id="loginEmail" type="email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="form-group"><label>Пароль</label><input class="form-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <div class="error-box" id="loginErr"><i class="fas fa-exclamation-circle"></i><span></span></div>
+      <button class="btn-full" style="margin-top:14px" onclick="emailLogin()">Войти</button>
+      <div class="switch-link">Нет аккаунта? <a onclick="openModal('regModal');closeModal('loginModal')">Зарегистрироваться</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- РЕГИСТРАЦИЯ -->
+<div class="overlay" id="regModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2>🚀 Регистрация</h2>
+      <button class="close-btn" onclick="closeModal('regModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="social-auth">
+        <button class="social-btn" onclick="googleLogin()"><i class="fab fa-google" style="color:#ea4335"></i> Google</button>
+        <button class="social-btn" onclick="openModal('phoneModal');closeModal('regModal')"><i class="fas fa-phone" style="color:var(--success)"></i> По номеру</button>
+      </div>
+      <div class="divider">или через email</div>
+      <div class="avatar-upload">
+        <img src="https://ui-avatars.com/api/?name=?&background=e2e8f0&color=64748b" class="avatar-preview-circle" id="regAvaPreview">
+        <button class="avatar-upload-btn">📷 Добавить фото<input type="file" accept="image/*" onchange="previewRegAva(event)"></button>
+        <span style="font-size:.78rem;color:var(--text2)">(необязательно)</span>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Имя *</label><input class="form-input" id="regName" placeholder="Ваше имя" autocomplete="given-name"></div>
+        <div class="form-group"><label>Фамилия</label><input class="form-input" id="regSurname" placeholder="Необязательно" autocomplete="family-name"></div>
+      </div>
+      <div class="form-group"><label>Email *</label><input class="form-input" id="regEmail" type="email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="form-group">
+        <label>Пароль *</label>
+        <input class="form-input" id="regPass" type="password" placeholder="Минимум 6 символов" autocomplete="new-password" oninput="checkStrength(this.value)">
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+        <div style="font-size:.73rem;color:var(--text2);margin-top:3px" id="strengthText"></div>
+      </div>
+      <div class="form-group"><label>Повторите пароль *</label><input class="form-input" id="regPass2" type="password" placeholder="Повторите пароль" autocomplete="new-password"></div>
+      <div class="error-box" id="regErr"><i class="fas fa-exclamation-circle"></i><span></span></div>
+      <button class="btn-full" style="margin-top:14px" onclick="emailRegister()">Создать аккаунт</button>
+      <div class="switch-link">Уже есть аккаунт? <a onclick="openModal('loginModal');closeModal('regModal')">Войти</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ТЕЛЕФОН -->
+<div class="overlay" id="phoneModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2>📱 Вход по номеру</h2>
+      <button class="close-btn" onclick="closeModal('phoneModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Номер телефона</label>
+        <div class="phone-row">
+          <select class="form-select country-code" id="countryCode">
+            <option value="+996">🇰🇬 +996</option>
+            <option value="+7">🇷🇺 +7</option>
+            <option value="+998">🇺🇿 +998</option>
+            <option value="+992">🇹🇯 +992</option>
+            <option value="+380">🇺🇦 +380</option>
+          </select>
+          <input class="form-input" id="phoneNum" type="tel" placeholder="700 000 000" autocomplete="tel">
+        </div>
+      </div>
+      <div id="phoneCodeSection" style="display:none">
+        <div class="form-group"><label>Код из SMS</label><input class="form-input" id="smsCode" placeholder="000000" inputmode="numeric" maxlength="6"></div>
+        <button class="btn-full" onclick="verifyCode()">Подтвердить код</button>
+      </div>
+      <button class="btn-full" id="sendCodeBtn" onclick="sendSmsCode()">Получить SMS-код</button>
+      <div id="recaptcha-container"></div>
+      <div class="error-box" id="phoneErr" style="margin-top:10px"><i class="fas fa-exclamation-circle"></i><span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ДОБАВИТЬ НОВОСТЬ -->
+<div class="overlay" id="addNewsModal">
+  <div class="modal modal-lg">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2>📰 Новая новость</h2>
+      <button class="close-btn" onclick="closeModal('addNewsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Заголовок *</label><input class="form-input" id="newTitle" placeholder="Заголовок новости"></div>
+      <div class="form-group"><label>Текст *</label><textarea class="form-textarea" id="newText" rows="5" placeholder="Подробное описание..."></textarea></div>
+      <div class="form-group">
+        <label>Фото (необязательно)</label>
+        <div class="file-drop"><input type="file" accept="image/*" id="newImg" onchange="previewFile(event,'newImgPreview')"><div class="file-drop-icon"><i class="fas fa-cloud-upload-alt"></i></div><p>Нажмите или перетащите фото</p></div>
+        <img class="img-preview" id="newImgPreview" alt="">
+      </div>
+      <div class="upload-progress" id="newsUploadProgress">
+        <div class="upload-progress-text">⏳ Загрузка фото...</div>
+        <div class="upload-progress-bar"><div class="upload-progress-fill" id="newsUploadFill"></div></div>
+      </div>
+      <button class="btn-full" id="publishNewsBtn" onclick="publishNews()">✨ Опубликовать новость</button>
+    </div>
+  </div>
+</div>
+
+<!-- ДОБАВИТЬ ОБЪЯВЛЕНИЕ -->
+<div class="overlay" id="addMarketModal">
+  <div class="modal modal-lg">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2>🛍️ Новое объявление</h2>
+      <button class="close-btn" onclick="closeModal('addMarketModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Фото товара *</label>
+        <div class="file-drop"><input type="file" accept="image/*" id="mktImg" onchange="previewFile(event,'mktImgPreview')"><div class="file-drop-icon"><i class="fas fa-camera"></i></div><p>Добавьте фото товара</p></div>
+        <img class="img-preview" id="mktImgPreview" alt="">
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Название *</label><input class="form-input" id="mktTitle" placeholder="Название товара"></div>
+        <div class="form-group"><label>Цена *</label><input class="form-input" id="mktPrice" type="number" placeholder="0 сом" inputmode="numeric"></div>
+      </div>
+      <div class="form-group"><label>Категория *</label>
+        <select class="form-select" id="mktCat">
+          <option value="tech">Техника</option><option value="land">Участки</option>
+          <option value="acc">Аксессуары</option><option value="cars">Машины</option>
+          <option value="animals">Животные</option><option value="materials">Материалы</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Описание</label><textarea class="form-textarea" id="mktDesc" placeholder="Описание товара..."></textarea></div>
+      <div class="form-group"><label>📍 Местонахождение</label><input class="form-input" id="mktLoc" placeholder="Ноокат, ..."></div>
+      <div style="background:var(--bg);border-radius:12px;padding:13px;margin-bottom:13px">
+        <p style="font-weight:800;margin-bottom:9px;font-size:.88rem">📞 Контакты для связи</p>
+        <div class="form-group" style="margin-bottom:7px">
+          <div class="phone-row">
+            <select class="form-select country-code" id="mktWaCode"><option value="+996">🇰🇬 +996</option><option value="+7">🇷🇺 +7</option></select>
+            <input class="form-input" id="mktWa" placeholder="WhatsApp *" inputmode="tel">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:7px">
+          <div class="phone-row">
+            <select class="form-select country-code" id="mktPhCode"><option value="+996">🇰🇬 +996</option><option value="+7">🇷🇺 +7</option></select>
+            <input class="form-input" id="mktPhone" placeholder="Телефон (необязательно)" inputmode="tel">
+          </div>
+        </div>
+        <input class="form-input" id="mktTg" placeholder="Telegram: @username (необязательно)">
+      </div>
+      <div class="upload-progress" id="mktUploadProgress">
+        <div class="upload-progress-text">⏳ Загрузка фото...</div>
+        <div class="upload-progress-bar"><div class="upload-progress-fill" id="mktUploadFill"></div></div>
+      </div>
+      <button class="btn-full" id="publishMarketBtn" onclick="publishMarket()">📤 Опубликовать объявление</button>
+    </div>
+  </div>
+</div>
+
+<!-- ДОБАВИТЬ ВАКАНСИЮ -->
+<div class="overlay" id="addJobModal">
+  <div class="modal modal-lg">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2>💼 Новая вакансия</h2>
+      <button class="close-btn" onclick="closeModal('addJobModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Должность *</label><input class="form-input" id="jobTitle" placeholder="Например: Продавец"></div>
+        <div class="form-group"><label>Зарплата</label><input class="form-input" id="jobSalary" placeholder="Например: 15 000 сом"></div>
+      </div>
+      <div class="form-group"><label>Работодатель / Компания *</label><input class="form-input" id="jobCompany" placeholder="Ваше имя или название компании"></div>
+      <div class="form-group"><label>Описание вакансии *</label><textarea class="form-textarea" id="jobDesc" placeholder="Требования, условия работы..."></textarea></div>
+      <div class="form-group"><label>📍 Место работы</label><input class="form-input" id="jobLoc" placeholder="Ноокат, ..."></div>
+      <div style="background:var(--bg);border-radius:12px;padding:13px;margin-bottom:13px">
+        <p style="font-weight:800;margin-bottom:9px;font-size:.88rem">📞 Контакты для связи</p>
+        <div class="phone-row" style="margin-bottom:8px">
+          <select class="form-select country-code" id="jobPhCode"><option value="+996">🇰🇬 +996</option><option value="+7">🇷🇺 +7</option></select>
+          <input class="form-input" id="jobPhone" placeholder="Номер телефона *" inputmode="tel">
+        </div>
+        <input class="form-input" id="jobTg" placeholder="Telegram: @username (необязательно)">
+      </div>
+      <button class="btn-full" id="publishJobBtn" onclick="publishJob()">📤 Опубликовать вакансию</button>
+    </div>
+  </div>
+</div>
+
+<!-- ПРОСМОТР ПОСТА -->
+<div class="overlay" id="postModal">
+  <div class="modal modal-lg">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2 id="postModalTitle" style="font-size:1.1rem;line-height:1.3"></h2>
+      <button class="close-btn" onclick="closeModal('postModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <img id="postModalImg" style="width:100%;border-radius:12px;margin-bottom:13px;display:none" alt="">
+      <div style="font-size:.77rem;color:var(--text2);margin-bottom:11px" id="postModalDate"></div>
+      <div id="postModalBody" style="line-height:1.8;font-size:.93rem;margin-bottom:15px;white-space:pre-wrap"></div>
+      <div id="postModalContacts"></div>
+      <button class="open-chat-btn" id="postChatBtn" style="display:none" onclick="startChatFromPost()">
+        <i class="fas fa-comments"></i> Написать продавцу
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+// Защита от просмотра ошибок в консоли
+window.onerror = () => true;
+window.onunhandledrejection = () => true;
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber,
+  onAuthStateChanged, signOut, updateProfile, updatePassword
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, query, orderBy, onSnapshot,
+  deleteDoc, doc, updateDoc, increment, where, getDocs,
+  serverTimestamp, setDoc, getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const _c = {
+  k:"AIzaSyAHNE24jDk8wysKkctBBFNSrSgmQr3PPaM",
+  d:"mydistrictnews-fa379.firebaseapp.com",
+  p:"mydistrictnews-fa379",
+  s:"mydistrictnews-fa379.firebasestorage.app",
+  m:"62802053109",
+  a:"1:62802053109:web:f4024816d979a79890c2bc"
+};
+const app = initializeApp({apiKey:_c.k,authDomain:_c.d,projectId:_c.p,storageBucket:_c.s,messagingSenderId:_c.m,appId:_c.a});
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// UID администратора — замените после первого входа
+const _A = "ВСТАВЬТЕ_ВАШ_UID_ЗДЕСЬ";
+
+// Cloudinary
+const _CN = 'dsd7kqaon';
+const _UP = 'herrozzv';
+
+async function uploadPhoto(file, onProgress) {
+  return new Promise((res, rej) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', _UP);
+    const x = new XMLHttpRequest();
+    x.open('POST', `https://api.cloudinary.com/v1_1/${_CN}/image/upload`);
+    if (onProgress) x.upload.onprogress = e => { if(e.lengthComputable) onProgress(Math.round(e.loaded/e.total*100)); };
+    x.onload = () => {
+      try {
+        const d = JSON.parse(x.responseText);
+        if (d.secure_url) res(d.secure_url);
+        else rej(new Error('Не удалось загрузить фото'));
+      } catch(e) { rej(new Error('Ошибка при загрузке фото')); }
+    };
+    x.onerror = () => rej(new Error('Нет соединения. Проверьте интернет'));
+    x.send(fd);
+  });
+}
+
+// Состояние
+let _u = null, allNews = [], allMarket = [], allJobs = [];
+let _cat = 'all', _chatId = null, _chatUnsub = null;
+let _postData = null, _avaFile = null, _avaClicks = 0, _avaTimer = null;
+const _store = new Map();
+
+// === АВТОРИЗАЦИЯ ===
+onAuthStateChanged(auth, async user => {
+  _u = user;
+  const gBtns = document.getElementById('guestBtns');
+  const avaBtn = document.getElementById('userAvaBtn');
+  if (user) {
+    gBtns.style.display = 'none';
+    avaBtn.style.display = 'block';
+    avaBtn.src = user.photoURL || _ava(user.displayName);
+    _updateProfileUI();
+    if (document.getElementById('sec-chat').classList.contains('on')) _showChat();
+  } else {
+    gBtns.style.display = 'flex';
+    avaBtn.style.display = 'none';
+  }
+});
+
+function _ava(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name||'U')}&background=2563eb&color=fff`;
+}
+
+function _updateProfileUI() {
+  if (!_u) return;
+  const name = _u.displayName || 'Пользователь';
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profileEmail').textContent = _u.email || _u.phoneNumber || '';
+  const av = _u.photoURL || _ava(name);
+  ['profileAva','settingsAvaPreview'].forEach(id => document.getElementById(id).src = av);
+  document.getElementById('settingsName').value = name.split(' ')[0] || '';
+  document.getElementById('settingsSurname').value = name.split(' ')[1] || '';
+}
+
+window.handleAvaClick = () => {
+  _avaClicks++;
+  clearTimeout(_avaTimer);
+  _avaTimer = setTimeout(() => _avaClicks = 0, 800);
+  if (_avaClicks >= 3) { _avaClicks = 0; }
+  goTab('profile');
+};
+
+// Нормальные сообщения об ошибках Firebase
+function _fbErr(code) {
+  const m = {
+    'auth/email-already-in-use':   'Этот email уже зарегистрирован. Попробуйте войти.',
+    'auth/invalid-email':           'Введите корректный email адрес.',
+    'auth/wrong-password':          'Неверный пароль. Попробуйте ещё раз.',
+    'auth/invalid-credential':      'Неверный email или пароль.',
+    'auth/user-not-found':          'Пользователь с таким email не найден.',
+    'auth/weak-password':           'Пароль слишком простой. Используйте минимум 6 символов.',
+    'auth/too-many-requests':       'Слишком много попыток. Подождите несколько минут.',
+    'auth/network-request-failed':  'Ошибка соединения. Проверьте интернет.',
+    'auth/popup-closed-by-user':    'Окно входа было закрыто. Попробуйте снова.',
+    'auth/cancelled-popup-request': 'Вход отменён.',
+    'auth/configuration-not-found': 'Вход по телефону временно недоступен.',
+    'auth/invalid-phone-number':    'Введите корректный номер телефона.',
+    'auth/invalid-verification-code':'Неверный код из SMS. Проверьте и введите снова.',
+    'auth/code-expired':            'Код из SMS устарел. Запросите новый.',
+    'auth/requires-recent-login':   'Для этого действия войдите в аккаунт заново.',
+  };
+  return m[code] || 'Что-то пошло не так. Попробуйте снова.';
+}
+
+function showErrBox(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.querySelector('span').textContent = msg;
+  el.classList.add('show');
+}
+function hideErrBox(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+
+// Регистрация
+window.emailRegister = async () => {
+  hideErrBox('regErr');
+  const name   = document.getElementById('regName').value.trim();
+  const surname= document.getElementById('regSurname').value.trim();
+  const email  = document.getElementById('regEmail').value.trim();
+  const pass   = document.getElementById('regPass').value;
+  const pass2  = document.getElementById('regPass2').value;
+
+  if (!name)           { showErrBox('regErr','Введите ваше имя.'); return; }
+  if (!email)          { showErrBox('regErr','Введите email адрес.'); return; }
+  if (pass.length < 6) { showErrBox('regErr','Пароль должен содержать минимум 6 символов.'); return; }
+  if (pass !== pass2)  { showErrBox('regErr','Пароли не совпадают. Проверьте и введите снова.'); return; }
+
+  const btn = document.getElementById('regModal').querySelector('.btn-full:last-of-type');
+  btn.disabled = true; btn.textContent = '⏳ Создаём аккаунт...';
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    let photoURL = null;
+    if (_avaFile) {
+      showToast('warn','⏳ Загружаем фото...');
+      photoURL = await uploadPhoto(_avaFile);
+    }
+    await updateProfile(cred.user, { displayName: name+(surname?' '+surname:''), photoURL });
+    await setDoc(doc(db,'users',cred.user.uid), {
+      name, surname, email, photoURL: photoURL||null, createdAt: serverTimestamp()
+    });
+    _avaFile = null;
+    closeModal('regModal');
+    showToast('ok','✅ Добро пожаловать, '+name+'!');
+  } catch(e) {
+    showErrBox('regErr', _fbErr(e.code));
+  }
+  btn.disabled = false; btn.textContent = 'Создать аккаунт';
+};
+
+// Вход
+window.emailLogin = async () => {
+  hideErrBox('loginErr');
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  if (!email) { showErrBox('loginErr','Введите email адрес.'); return; }
+  if (!pass)  { showErrBox('loginErr','Введите пароль.'); return; }
+
+  const btn = document.getElementById('loginModal').querySelector('.btn-full');
+  btn.disabled = true; btn.textContent = '⏳ Входим...';
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    closeModal('loginModal');
+    showToast('ok','✅ Вы успешно вошли!');
+  } catch(e) {
+    showErrBox('loginErr', _fbErr(e.code));
+  }
+  btn.disabled = false; btn.textContent = 'Войти';
+};
+
+// Google
+window.googleLogin = async () => {
+  try {
+    const r = await signInWithPopup(auth, new GoogleAuthProvider());
+    const ref = doc(db,'users',r.user.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { name: r.user.displayName||'Пользователь', email: r.user.email, photoURL: r.user.photoURL||null, createdAt: serverTimestamp() });
+    }
+    closeModal('loginModal'); closeModal('regModal');
+    showToast('ok','✅ Вход через Google выполнен!');
+  } catch(e) {
+    if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
+      showToast('err', _fbErr(e.code));
+    }
+  }
+};
+
+// Телефон
+window.sendSmsCode = async () => {
+  hideErrBox('phoneErr');
+  const code = document.getElementById('countryCode').value;
+  const num  = document.getElementById('phoneNum').value.trim();
+  if (!num) { showErrBox('phoneErr','Введите номер телефона.'); return; }
+  const btn = document.getElementById('sendCodeBtn');
+  btn.disabled = true; btn.textContent = '⏳ Отправка...';
+  try {
+    window.recaptchaVerifier = new RecaptchaVerifier(auth,'recaptcha-container',{size:'invisible'});
+    window._confirm = await signInWithPhoneNumber(auth, code+num, window.recaptchaVerifier);
+    document.getElementById('phoneCodeSection').style.display = 'block';
+    btn.style.display = 'none';
+    showToast('ok','📱 SMS отправлено!');
+  } catch(e) {
+    showErrBox('phoneErr', _fbErr(e.code));
+    btn.disabled = false; btn.textContent = 'Получить SMS-код';
+  }
+};
+
+window.verifyCode = async () => {
+  hideErrBox('phoneErr');
+  const code = document.getElementById('smsCode').value.trim();
+  if (!code) { showErrBox('phoneErr','Введите код из SMS.'); return; }
+  try {
+    await window._confirm.confirm(code);
+    closeModal('phoneModal');
+    showToast('ok','✅ Вход выполнен!');
+  } catch(e) {
+    showErrBox('phoneErr', _fbErr(e.code));
+  }
+};
+
+window.logout = async () => {
+  await signOut(auth);
+  goTab('news');
+  showToast('ok','👋 Вы вышли из аккаунта');
+};
+
+// === ЗАГРУЗКА ФОТО ПРОФИЛЯ ===
+window.changeProfilePhoto = async (e) => {
+  const file = e.target.files[0];
+  if (!file || !_u) return;
+  showToast('warn','⏳ Загружаем фото...');
+  try {
+    const url = await uploadPhoto(file);
+    await updateProfile(_u, {photoURL:url});
+    await updateDoc(doc(db,'users',_u.uid), {photoURL:url});
+    ['settingsAvaPreview','profileAva','userAvaBtn'].forEach(id => document.getElementById(id).src = url);
+    showToast('ok','✅ Фото профиля обновлено!');
+  } catch(e) { showToast('err','Не удалось загрузить фото. Попробуйте снова.'); }
+};
+
+// === ПУБЛИКАЦИИ ===
+
+window.publishNews = async () => {
+  if (!_u || _u.uid !== _A) { showToast('err','❌ Недостаточно прав'); return; }
+  const title = document.getElementById('newTitle').value.trim();
+  const text  = document.getElementById('newText').value.trim();
+  const file  = document.getElementById('newImg').files[0];
+  if (!title) { showToast('warn','⚠️ Введите заголовок новости'); return; }
+  if (!text)  { showToast('warn','⚠️ Введите текст новости'); return; }
+
+  const btn = document.getElementById('publishNewsBtn');
+  btn.disabled = true; btn.textContent = '⏳ Публикация...';
+
+  try {
+    let img = '';
+    if (file) {
+      document.getElementById('newsUploadProgress').style.display = 'block';
+      img = await uploadPhoto(file, p => { document.getElementById('newsUploadFill').style.width = p+'%'; });
+      document.getElementById('newsUploadProgress').style.display = 'none';
+    }
+    await addDoc(collection(db,'posts'), { title, text, img, date:serverTimestamp(), views:0, likes:0, hearts:0, fire:0, authorId:_u.uid });
+    closeModal('addNewsModal');
+    ['newTitle','newText'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('newImg').value = '';
+    document.getElementById('newImgPreview').style.display = 'none';
+    showToast('ok','✅ Новость успешно опубликована!');
+  } catch(e) { showToast('err','Не удалось опубликовать. Проверьте интернет.'); }
+
+  btn.disabled = false; btn.textContent = '✨ Опубликовать новость';
+};
+
+window.publishMarket = async () => {
+  if (!_u) { openModal('loginModal'); return; }
+  const title = document.getElementById('mktTitle').value.trim();
+  const price = document.getElementById('mktPrice').value;
+  const waNum = document.getElementById('mktWa').value.trim();
+  const file  = document.getElementById('mktImg').files[0];
+
+  if (!title)  { showToast('warn','⚠️ Введите название товара'); return; }
+  if (!price)  { showToast('warn','⚠️ Укажите цену товара'); return; }
+  if (!waNum)  { showToast('warn','⚠️ Укажите WhatsApp для связи'); return; }
+  if (!file)   { showToast('warn','⚠️ Добавьте фото товара'); return; }
+
+  const btn = document.getElementById('publishMarketBtn');
+  btn.disabled = true; btn.textContent = '⏳ Публикация...';
+
+  try {
+    document.getElementById('mktUploadProgress').style.display = 'block';
+    const img = await uploadPhoto(file, p => { document.getElementById('mktUploadFill').style.width = p+'%'; });
+    document.getElementById('mktUploadProgress').style.display = 'none';
+
+    await addDoc(collection(db,'market'), {
+      title, price:Number(price),
+      cat:   document.getElementById('mktCat').value,
+      desc:  document.getElementById('mktDesc').value.trim(),
+      loc:   document.getElementById('mktLoc').value.trim(),
+      img,
+      wa:    document.getElementById('mktWaCode').value + waNum,
+      phone: document.getElementById('mktPhCode').value + document.getElementById('mktPhone').value.trim(),
+      tg:    document.getElementById('mktTg').value.trim(),
+      date:serverTimestamp(), views:0, likes:0,
+      authorId:_u.uid, authorName:_u.displayName||'Аноним', authorPhoto:_u.photoURL||null
+    });
+    closeModal('addMarketModal');
+    ['mktTitle','mktPrice','mktDesc','mktLoc','mktWa','mktPhone','mktTg'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('mktImg').value = '';
+    document.getElementById('mktImgPreview').style.display = 'none';
+    showToast('ok','✅ Объявление опубликовано!');
+  } catch(e) { showToast('err','Не удалось опубликовать. Проверьте интернет.'); }
+
+  btn.disabled = false; btn.textContent = '📤 Опубликовать объявление';
+};
+
+window.publishJob = async () => {
+  if (!_u) { openModal('loginModal'); return; }
+  const title   = document.getElementById('jobTitle').value.trim();
+  const company = document.getElementById('jobCompany').value.trim();
+  const desc    = document.getElementById('jobDesc').value.trim();
+  const phone   = document.getElementById('jobPhone').value.trim();
+
+  if (!title)   { showToast('warn','⚠️ Введите название должности'); return; }
+  if (!company) { showToast('warn','⚠️ Укажите работодателя или компанию'); return; }
+  if (!desc)    { showToast('warn','⚠️ Напишите описание вакансии'); return; }
+  if (!phone)   { showToast('warn','⚠️ Укажите номер телефона для связи'); return; }
+
+  const btn = document.getElementById('publishJobBtn');
+  btn.disabled = true; btn.textContent = '⏳ Публикация...';
+
+  try {
+    await addDoc(collection(db,'jobs'), {
+      title, company, desc,
+      salary: document.getElementById('jobSalary').value.trim(),
+      loc:    document.getElementById('jobLoc').value.trim(),
+      phone:  document.getElementById('jobPhCode').value + phone,
+      tg:     document.getElementById('jobTg').value.trim(),
+      date:serverTimestamp(), views:0,
+      authorId:_u.uid, authorName:_u.displayName||'Аноним'
+    });
+    closeModal('addJobModal');
+    ['jobTitle','jobSalary','jobCompany','jobDesc','jobLoc','jobPhone','jobTg'].forEach(id => document.getElementById(id).value = '');
+    showToast('ok','✅ Вакансия опубликована!');
+  } catch(e) { showToast('err','Не удалось опубликовать. Проверьте интернет.'); }
+
+  btn.disabled = false; btn.textContent = '📤 Опубликовать вакансию';
+};
+
+// === ПОДПИСКИ FIRESTORE ===
+onSnapshot(query(collection(db,'posts'),   orderBy('date','desc')), snap => { allNews   = snap.docs.map(d=>({id:d.id,...d.data()})); filterPosts();  document.getElementById('newsLoader').style.display='none'; });
+onSnapshot(query(collection(db,'market'),  orderBy('date','desc')), snap => { allMarket = snap.docs.map(d=>({id:d.id,...d.data()})); filterMarket(); document.getElementById('marketLoader').style.display='none'; });
+onSnapshot(query(collection(db,'jobs'),    orderBy('date','desc')), snap => { allJobs   = snap.docs.map(d=>({id:d.id,...d.data()})); filterJobs();   document.getElementById('jobsLoader').style.display='none'; });
+
+// === ФИЛЬТРЫ ===
+window.filterPosts  = () => { const q=document.getElementById('newsSearch').value.toLowerCase(); renderNews(allNews.filter(p=>p.title?.toLowerCase().includes(q)||p.text?.toLowerCase().includes(q))); };
+window.filterMarket = () => { const q=document.getElementById('marketSearch').value.toLowerCase(); let f=allMarket.filter(p=>p.title?.toLowerCase().includes(q)||p.desc?.toLowerCase().includes(q)); if(_cat!=='all') f=f.filter(p=>p.cat===_cat); renderMarket(f); };
+window.filterJobs   = () => { const q=document.getElementById('jobsSearch').value.toLowerCase(); renderJobs(allJobs.filter(p=>p.title?.toLowerCase().includes(q)||p.company?.toLowerCase().includes(q)||p.desc?.toLowerCase().includes(q))); };
+
+// === РЕНДЕР ===
+function _esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function _fmtD(d){ const now=new Date(),diff=now-d; if(diff<60000)return'только что'; if(diff<3600000)return Math.floor(diff/60000)+' мин назад'; if(diff<86400000)return Math.floor(diff/3600000)+' ч назад'; if(diff<604800000)return Math.floor(diff/86400000)+' д назад'; return d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'}); }
+function _fmtT(d){ return d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}); }
+function _fmtP(p){ return Number(p).toLocaleString('ru-RU')+' сом'; }
+
+function renderNews(posts) {
+  const grid=document.getElementById('newsGrid'), empty=document.getElementById('newsEmpty');
+  if(!posts.length){grid.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  posts.forEach(p=>_store.set('n_'+p.id,p));
+  grid.innerHTML=posts.map(p=>{
+    const ds=p.date?.toDate?_fmtD(p.date.toDate()):'';
+    const isNew=p.date?.toDate&&(Date.now()-p.date.toDate().getTime())<86400000;
+    return `<div class="news-card">
+      <button class="three-dots" onclick="toggleDD('nd_${p.id}',event)"><i class="fas fa-ellipsis-v"></i></button>
+      <div class="dropdown" id="nd_${p.id}">
+        <div class="dropdown-item" onclick="sharePost('${p.id}')"><i class="fas fa-share-alt"></i> Поделиться</div>
+        <div class="dropdown-item red" onclick="reportPost()"><i class="fas fa-flag"></i> Пожаловаться</div>
+        ${_u?.uid===_A?`<div class="dropdown-item red" onclick="delPost('posts','${p.id}')"><i class="fas fa-trash"></i> Удалить</div>`:''}
+      </div>
+      ${p.img?`<img class="news-card-img" src="${p.img}" alt="" loading="lazy">`:''}
+      <div class="news-card-body">
+        <div class="news-card-meta">
+          <span class="news-card-date">${ds}</span>
+          ${isNew?'<span class="news-card-badge">Новое</span>':''}
+        </div>
+        <h3 onclick="openNews('${p.id}')">${_esc(p.title)}</h3>
+        <p class="news-card-text">${_esc((p.text||'').substring(0,110))}${(p.text||'').length>110?'...':''}</p>
+        <div class="news-card-footer">
+          <div class="reactions">
+            <button class="reaction-btn" onclick="react('posts','${p.id}','likes',this)">👍 ${p.likes||0}</button>
+            <button class="reaction-btn" onclick="react('posts','${p.id}','hearts',this)">❤️ ${p.hearts||0}</button>
+            <button class="reaction-btn" onclick="react('posts','${p.id}','fire',this)">🔥 ${p.fire||0}</button>
+          </div>
+          <div class="post-stats"><i class="fas fa-eye"></i> ${p.views||0}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderMarket(items) {
+  const grid=document.getElementById('marketGrid'), empty=document.getElementById('marketEmpty');
+  if(!items.length){grid.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  items.forEach(p=>_store.set('m_'+p.id,p));
+  grid.innerHTML=items.map(p=>`
+    <div class="market-card" onclick="openMarket('${p.id}')">
+      <button class="three-dots" onclick="toggleDD('md_${p.id}',event);event.stopPropagation()"><i class="fas fa-ellipsis-v"></i></button>
+      <div class="dropdown" id="md_${p.id}">
+        <div class="dropdown-item" onclick="sharePost('${p.id}');event.stopPropagation()"><i class="fas fa-share-alt"></i> Поделиться</div>
+        <div class="dropdown-item red" onclick="reportPost();event.stopPropagation()"><i class="fas fa-flag"></i> Пожаловаться</div>
+        ${_u?.uid===p.authorId?`<div class="dropdown-item red" onclick="delPost('market','${p.id}');event.stopPropagation()"><i class="fas fa-trash"></i> Удалить</div>`:''}
+      </div>
+      <img class="market-card-img" src="${p.img}" alt="" loading="lazy">
+      <div class="market-card-body">
+        <div class="market-card-price">${_fmtP(p.price)}</div>
+        <div class="market-card-title">${_esc(p.title)}</div>
+        <div class="market-card-loc"><i class="fas fa-map-marker-alt"></i> ${_esc(p.loc||'Ноокат')}</div>
+        <div class="market-card-foot">
+          <div class="market-card-seller">
+            <img class="seller-ava" src="${p.authorPhoto||_ava(p.authorName)}" alt="">
+            ${_esc(p.authorName||'Аноним')}
+          </div>
+          <div class="post-stats"><i class="fas fa-eye"></i> ${p.views||0}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderJobs(jobs) {
+  const list=document.getElementById('jobsList'), empty=document.getElementById('jobsEmpty');
+  if(!jobs.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  jobs.forEach(p=>_store.set('j_'+p.id,p));
+  list.innerHTML=jobs.map(p=>`
+    <div class="job-card" onclick="openJob('${p.id}')">
+      <button class="three-dots" onclick="toggleDD('jd_${p.id}',event);event.stopPropagation()"><i class="fas fa-ellipsis-v"></i></button>
+      <div class="dropdown" id="jd_${p.id}">
+        <div class="dropdown-item" onclick="sharePost('${p.id}');event.stopPropagation()"><i class="fas fa-share-alt"></i> Поделиться</div>
+        <div class="dropdown-item red" onclick="reportPost();event.stopPropagation()"><i class="fas fa-flag"></i> Пожаловаться</div>
+        ${_u?.uid===p.authorId?`<div class="dropdown-item red" onclick="delPost('jobs','${p.id}');event.stopPropagation()"><i class="fas fa-trash"></i> Удалить</div>`:''}
+      </div>
+      <div class="job-header">
+        <div class="job-title">${_esc(p.title)}</div>
+        ${p.salary?`<div class="job-salary">${_esc(p.salary)}</div>`:''}
+      </div>
+      <div class="job-company"><i class="fas fa-building"></i> ${_esc(p.company)}</div>
+      <div class="job-tags">${p.loc?`<span class="job-tag"><i class="fas fa-map-marker-alt"></i> ${_esc(p.loc)}</span>`:''}</div>
+      <div class="job-foot">
+        <span class="job-date">${p.date?.toDate?_fmtD(p.date.toDate()):''}</span>
+        <div class="post-stats"><i class="fas fa-eye"></i> ${p.views||0}</div>
+      </div>
+    </div>`).join('');
+}
+
+// === ОТКРЫТИЕ ПОСТОВ ===
+window.openNews = async (id) => {
+  const p = _store.get('n_'+id); if(!p) return;
+  _postData = p;
+  document.getElementById('postModalTitle').textContent = p.title;
+  document.getElementById('postModalBody').textContent = p.text;
+  document.getElementById('postModalDate').textContent = '📅 '+(p.date?.toDate?_fmtD(p.date.toDate()):'');
+  const img = document.getElementById('postModalImg');
+  p.img?(img.src=p.img,img.style.display='block'):img.style.display='none';
+  document.getElementById('postModalContacts').innerHTML='';
+  document.getElementById('postChatBtn').style.display='none';
+  openModal('postModal');
+  try { await updateDoc(doc(db,'posts',id),{views:increment(1)}); } catch(e){}
+};
+
+window.openMarket = async (id) => {
+  const p = _store.get('m_'+id); if(!p) return;
+  _postData = p;
+  document.getElementById('postModalTitle').textContent = p.title;
+  document.getElementById('postModalBody').innerHTML = `<div style="font-size:1.25rem;font-weight:900;color:var(--primary);margin-bottom:8px">${_fmtP(p.price)}</div><p>${_esc(p.desc||'')}</p>${p.loc?`<p style="margin-top:8px;color:var(--text2)"><i class="fas fa-map-marker-alt"></i> ${_esc(p.loc)}</p>`:''}`;
+  document.getElementById('postModalDate').textContent = p.date?.toDate?_fmtD(p.date.toDate()):'';
+  const img=document.getElementById('postModalImg');
+  p.img?(img.src=p.img,img.style.display='block'):img.style.display='none';
+  let c='';
+  if(p.wa)    c+=`<div class="post-contact-row"><i class="fab fa-whatsapp" style="color:#25d366"></i><a href="https://wa.me/${p.wa.replace(/\D/g,'')}" target="_blank">${_esc(p.wa)}</a></div>`;
+  if(p.phone) c+=`<div class="post-contact-row"><i class="fas fa-phone" style="color:var(--success)"></i><a href="tel:${p.phone}">${_esc(p.phone)}</a></div>`;
+  if(p.tg)    c+=`<div class="post-contact-row"><i class="fab fa-telegram" style="color:#0088cc"></i><span>${_esc(p.tg)}</span></div>`;
+  document.getElementById('postModalContacts').innerHTML=c;
+  document.getElementById('postChatBtn').style.display=(p.authorId&&_u&&p.authorId!==_u.uid)?'flex':'none';
+  openModal('postModal');
+  try { await updateDoc(doc(db,'market',id),{views:increment(1)}); } catch(e){}
+};
+
+window.openJob = async (id) => {
+  const p = _store.get('j_'+id); if(!p) return;
+  _postData = p;
+  document.getElementById('postModalTitle').textContent = p.title;
+  document.getElementById('postModalBody').innerHTML = `<p style="font-weight:700;margin-bottom:7px"><i class="fas fa-building"></i> ${_esc(p.company)}</p>${p.salary?`<p style="color:var(--success);font-weight:900;font-size:1.1rem;margin-bottom:10px">${_esc(p.salary)}</p>`:''}<p>${_esc(p.desc)}</p>${p.loc?`<p style="margin-top:8px;color:var(--text2)"><i class="fas fa-map-marker-alt"></i> ${_esc(p.loc)}</p>`:''}`;
+  document.getElementById('postModalDate').textContent = p.date?.toDate?_fmtD(p.date.toDate()):'';
+  document.getElementById('postModalImg').style.display='none';
+  let c='';
+  if(p.phone) c+=`<div class="post-contact-row"><i class="fas fa-phone" style="color:var(--success)"></i><a href="tel:${p.phone}">${_esc(p.phone)}</a></div>`;
+  if(p.tg)    c+=`<div class="post-contact-row"><i class="fab fa-telegram" style="color:#0088cc"></i><span>${_esc(p.tg)}</span></div>`;
+  document.getElementById('postModalContacts').innerHTML=c;
+  document.getElementById('postChatBtn').style.display=(p.authorId&&_u&&p.authorId!==_u.uid)?'flex':'none';
+  openModal('postModal');
+  try { await updateDoc(doc(db,'jobs',id),{views:increment(1)}); } catch(e){}
+};
+
+// === РЕАКЦИИ ===
+window.react = async (coll,id,field,btn) => {
+  if(!_u){showToast('warn','⚠️ Войдите чтобы оставлять реакции');return;}
+  btn.classList.toggle('active');
+  try { await updateDoc(doc(db,coll,id),{[field]:increment(btn.classList.contains('active')?1:-1)}); } catch(e){}
+};
+
+// === УДАЛЕНИЕ ===
+window.delPost = async (coll,id) => {
+  if(!confirm('Удалить эту публикацию?')) return;
+  try { await deleteDoc(doc(db,coll,id)); _store.delete(coll[0]+'_'+id); showToast('ok','✅ Публикация удалена'); }
+  catch(e) { showToast('err','Не удалось удалить. Попробуйте снова.'); }
+};
+
+// === МОИ ПУБЛИКАЦИИ ===
+async function loadMyPosts() {
+  if(!_u) return;
+  const loader=document.getElementById('myPostsLoader');
+  const grid=document.getElementById('myPostsGrid');
+  const empty=document.getElementById('myPostsEmpty');
+  loader.style.display='block'; grid.innerHTML=''; empty.style.display='none';
+  try {
+    const [ms,js] = await Promise.all([
+      getDocs(query(collection(db,'market'),where('authorId','==',_u.uid),orderBy('date','desc'))),
+      getDocs(query(collection(db,'jobs'),  where('authorId','==',_u.uid),orderBy('date','desc')))
+    ]);
+    const items = [...ms.docs.map(d=>({id:d.id,type:'market',...d.data()})),...js.docs.map(d=>({id:d.id,type:'jobs',...d.data()}))];
+    loader.style.display='none';
+    if(!items.length){empty.style.display='block';return;}
+    const tl={'market':'🛍️ Рынок','jobs':'💼 Вакансия'};
+    grid.innerHTML=items.map(p=>`
+      <div class="my-post-card">
+        <button class="my-post-del" onclick="delPost('${p.type}','${p.id}')" title="Удалить"><i class="fas fa-trash"></i></button>
+        <div class="my-post-card-type">${tl[p.type]||''}</div>
+        <div class="my-post-card-title">${_esc(p.title)}</div>
+        <div style="font-size:.76rem;color:var(--text2)">${p.date?.toDate?_fmtD(p.date.toDate()):''}</div>
+      </div>`).join('');
+  } catch(e) { loader.style.display='none'; showToast('err','Не удалось загрузить публикации.'); }
+}
+
+// === ЧАТ ===
+function _showChat() {
+  if(!_u){ document.getElementById('chatAuth').style.display='flex'; document.getElementById('chatSection').style.display='none'; return; }
+  document.getElementById('chatAuth').style.display='none';
+  document.getElementById('chatSection').style.display='block';
+  _loadChatList();
+}
+
+function _loadChatList() {
+  const q=query(collection(db,'chats'),where('participants','array-contains',_u.uid),orderBy('lastTime','desc'));
+  onSnapshot(q, async snap => {
+    const list=document.getElementById('chatListItems');
+    if(!snap.docs.length){list.innerHTML='<div style="padding:14px;font-size:.83rem;color:var(--text2);text-align:center">Чатов пока нет</div>';return;}
+    let html='';
+    for(const d of snap.docs){
+      const data=d.data();
+      const otherId=data.participants.find(id=>id!==_u.uid);
+      try {
+        const os=await getDoc(doc(db,'users',otherId));
+        const o=os.data()||{};
+        const av=o.photoURL||_ava(o.name);
+        html+=`<div class="chat-item" onclick="openChat('${d.id}','${otherId}','${(o.name||'Пользователь').replace(/'/g,"\\'")}','${av}')">
+          <img class="chat-item-ava" src="${av}" alt="">
+          <div class="chat-item-info">
+            <div class="chat-item-name">${_esc(o.name||'Пользователь')}</div>
+            <div class="chat-item-last">${_esc(data.lastMsg||'')}</div>
+          </div>
+          <div class="chat-item-time">${data.lastTime?.toDate?_fmtT(data.lastTime.toDate()):''}</div>
+        </div>`;
+      } catch(e){}
+    }
+    list.innerHTML=html;
+  });
+}
+
+window.startChatFromPost = async () => {
+  if(!_u){openModal('loginModal');return;}
+  if(!_postData?.authorId) return;
+  closeModal('postModal');
+  goTab('chat');
+  try {
+    const os=await getDoc(doc(db,'users',_postData.authorId));
+    const o=os.data()||{};
+    openChat([_u.uid,_postData.authorId].sort().join('_'), _postData.authorId, o.name||'Пользователь', o.photoURL||_ava(o.name));
+  } catch(e){ showToast('err','Не удалось открыть чат.'); }
+};
+
+window.openChat = async (chatId, otherId, otherName, otherAva) => {
+  if(_chatUnsub){_chatUnsub();_chatUnsub=null;}
+  _chatId=chatId;
+
+  document.getElementById('chatEmpty').style.display='none';
+  const ca=document.getElementById('chatActive');
+  ca.style.display='flex';
+
+  const av=document.getElementById('chatWinAva');
+  av.style.backgroundImage=`url(${otherAva})`;
+  av.style.backgroundSize='cover';
+  av.style.backgroundPosition='center';
+  document.getElementById('chatWinName').textContent=otherName;
+
+  await setDoc(doc(db,'chats',chatId),{participants:[_u.uid,otherId],lastMsg:'',lastTime:serverTimestamp()},{merge:true});
+
+  _chatUnsub=onSnapshot(query(collection(db,'chats',chatId,'messages'),orderBy('time','asc')), snap=>{
+    const el=document.getElementById('chatMessages');
+    el.innerHTML=snap.docs.map(d=>{
+      const m=d.data(), mine=m.senderId===_u.uid;
+      if(m.img) return `<div class="msg ${mine?'mine':'other'}"><img class="msg-img" src="${m.img}" onclick="window.open('${m.img}','_blank')" alt=""><div class="msg-time">${m.time?.toDate?_fmtT(m.time.toDate()):''}</div></div>`;
+      return `<div class="msg ${mine?'mine':'other'}"><div class="msg-bubble">${_esc(m.text)}</div><div class="msg-time">${m.time?.toDate?_fmtT(m.time.toDate()):''}</div></div>`;
+    }).join('');
+    el.scrollTop=el.scrollHeight;
+  });
+
+  // Мобильное переключение
+  if(window.innerWidth<=768){
+    document.getElementById('chatListPanel').classList.add('mob-hide');
+    document.getElementById('chatWindowPanel').classList.remove('mob-hide');
+    document.getElementById('chatBackBtn').style.display='flex';
+  }
+};
+
+window.showChatList = () => {
+  if(_chatUnsub){_chatUnsub();_chatUnsub=null;}
+  document.getElementById('chatListPanel').classList.remove('mob-hide');
+  document.getElementById('chatWindowPanel').classList.add('mob-hide');
+  document.getElementById('chatBackBtn').style.display='none';
+  document.getElementById('chatActive').style.display='none';
+  document.getElementById('chatEmpty').style.display='flex';
+};
+
+window.sendMsg = async () => {
+  if(!_u||!_chatId) return;
+  const inp=document.getElementById('msgInput');
+  const text=inp.value.trim();
+  if(!text) return;
+  inp.value='';
+  await addDoc(collection(db,'chats',_chatId,'messages'),{text,senderId:_u.uid,time:serverTimestamp()});
+  await updateDoc(doc(db,'chats',_chatId),{lastMsg:text,lastTime:serverTimestamp()});
+};
+
+window.sendImg = async (e) => {
+  if(!_u||!_chatId) return;
+  const file=e.target.files[0]; if(!file) return;
+  showToast('warn','⏳ Отправляем фото...');
+  try {
+    const img=await uploadPhoto(file);
+    await addDoc(collection(db,'chats',_chatId,'messages'),{img,senderId:_u.uid,time:serverTimestamp()});
+    await updateDoc(doc(db,'chats',_chatId),{lastMsg:'📷 Фото',lastTime:serverTimestamp()});
+    showToast('ok','✅ Фото отправлено!');
+  } catch(er){ showToast('err','Не удалось отправить фото.'); }
+  e.target.value='';
+};
+
+// === ПРОФИЛЬ ===
+window.switchProfileTab = (tab, btn) => {
+  document.querySelectorAll('.profile-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('profileMyPosts').style.display  = tab==='myPosts'?'block':'none';
+  document.getElementById('profileSettings').style.display = tab==='settings'?'block':'none';
+  if(tab==='myPosts') loadMyPosts();
+};
+
+window.saveSettings = async () => {
+  if(!_u) return;
+  const name   = document.getElementById('settingsName').value.trim();
+  const surname= document.getElementById('settingsSurname').value.trim();
+  const pass   = document.getElementById('settingsPass').value;
+  if(!name){ showToast('warn','⚠️ Введите имя'); return; }
+  try {
+    const full=name+(surname?' '+surname:'');
+    await updateProfile(_u,{displayName:full});
+    if(pass && pass.length>=6) await updatePassword(_u,pass);
+    else if(pass && pass.length<6){ showToast('warn','⚠️ Новый пароль должен содержать минимум 6 символов'); return; }
+    await updateDoc(doc(db,'users',_u.uid),{name,surname});
+    _updateProfileUI();
+    document.getElementById('userAvaBtn').src=_u.photoURL||_ava(full);
+    showToast('ok','✅ Настройки сохранены!');
+  } catch(e){ showToast('err','Не удалось сохранить. Попробуйте снова.'); }
+};
+
+// === FAB ===
+window.handleFab = () => {
+  if(!_u){openModal('loginModal');return;}
+  const tab=document.querySelector('.nav-tab.on')?.dataset.tab;
+  if(tab==='market')                    openModal('addMarketModal');
+  else if(tab==='jobs')                 openModal('addJobModal');
+  else if(tab==='news'&&_u.uid===_A)    openModal('addNewsModal');
+  else if(tab==='news')                 showToast('warn','⚠️ Только администратор может публиковать новости');
+  else showToast('warn','⚠️ Перейдите на вкладку Рынок или Вакансии');
+};
+
+// === 3 ТОЧКИ ===
+window.toggleDD = (id,e) => {
+  e.stopPropagation();
+  document.querySelectorAll('.dropdown.show').forEach(d=>{ if(d.id!==id) d.classList.remove('show'); });
+  document.getElementById(id)?.classList.toggle('show');
+};
+document.addEventListener('click',()=>document.querySelectorAll('.dropdown.show').forEach(d=>d.classList.remove('show')));
+
+window.sharePost = (id) => {
+  const url=`${location.origin}${location.pathname}?post=${id}`;
+  navigator.share?navigator.share({title:'Ноокат Новости',url}):navigator.clipboard.writeText(url).then(()=>showToast('ok','🔗 Ссылка скопирована!'));
+};
+window.reportPost = () => showToast('ok','⚠️ Жалоба отправлена. Спасибо!');
+
+// === ФАЙЛЫ ===
+window.previewFile = (e,pid) => {
+  const file=e.target.files[0]; if(!file) return;
+  const r=new FileReader();
+  r.onload=ev=>{const img=document.getElementById(pid);img.src=ev.target.result;img.style.display='block';};
+  r.readAsDataURL(file);
+};
+window.previewRegAva = (e) => {
+  _avaFile=e.target.files[0]; if(!_avaFile) return;
+  const r=new FileReader();
+  r.onload=ev=>document.getElementById('regAvaPreview').src=ev.target.result;
+  r.readAsDataURL(_avaFile);
+};
+
+// === СИЛА ПАРОЛЯ ===
+window.checkStrength = (pass) => {
+  const fill=document.getElementById('strengthFill'), text=document.getElementById('strengthText');
+  let s=0;
+  if(pass.length>=6)s++; if(pass.length>=10)s++; if(/[A-Z]/.test(pass))s++; if(/[0-9]/.test(pass))s++; if(/[^A-Za-z0-9]/.test(pass))s++;
+  fill.style.width=(s*20)+'%';
+  fill.style.background=['#ef4444','#f97316','#eab308','#22c55e','#10b981'][s-1]||'#ef4444';
+  text.textContent=s>0?['Очень слабый','Слабый','Средний','Сильный','Очень сильный'][s-1]:'';
+};
+
+// === ЯЗЫК ===
+document.querySelectorAll('.lang-sw button').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.lang-sw button').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+    const lang=this.dataset.lang;
+    document.querySelectorAll('[data-ru]').forEach(el=>el.textContent=el.getAttribute('data-'+lang)||el.textContent);
+    localStorage.setItem('lang',lang);
+  });
+});
+if(localStorage.getItem('lang')==='kg'){
+  document.querySelectorAll('.lang-sw button').forEach(b=>b.classList.toggle('on',b.dataset.lang==='kg'));
+  document.querySelectorAll('[data-ru]').forEach(el=>el.textContent=el.getAttribute('data-kg')||el.textContent);
+}
+
+// === ТЕМА ===
+window.toggleTheme = () => {
+  document.body.classList.toggle('dark');
+  const dark=document.body.classList.contains('dark');
+  document.getElementById('themeBtn').textContent=dark?'☀️':'🌙';
+  localStorage.setItem('theme',dark?'dark':'light');
+};
+if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark');document.getElementById('themeBtn').textContent='☀️';}
+
+// === ТАБЫ ===
+window.goTab = (name) => {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('sec-'+name)?.classList.add('on');
+  document.querySelector(`.nav-tab[data-tab="${name}"]`)?.classList.add('on');
+  if(name==='chat')    _showChat();
+  if(name==='profile') loadMyPosts();
+  if(name==='news')    document.getElementById('newsSearch').value='';
+  if(name==='market')  document.getElementById('marketSearch').value='';
+  if(name==='jobs')    document.getElementById('jobsSearch').value='';
+};
+
+// === МОДАЛКИ ===
+window.openModal  = id => document.getElementById(id)?.classList.add('show');
+window.closeModal = id => document.getElementById(id)?.classList.remove('show');
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('show'); });
+});
+
+// === КАТЕГОРИИ РЫНКА ===
+document.querySelectorAll('.cat-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+    _cat=this.dataset.cat;
+    filterMarket();
+  });
+});
+
+// === СКРОЛЛ ===
+window.addEventListener('scroll',()=>document.getElementById('scrollUp').classList.toggle('show',window.pageYOffset>300));
+
+// === ТОСТ ===
+window.showToast = (type,text) => {
+  const t=document.getElementById('toast');
+  t.className='toast '+type+' show';
+  t.innerHTML=`<span>${type==='ok'?'✅':type==='err'?'❌':'⚠️'}</span> <span>${text}</span>`;
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.classList.remove('show'),3500);
+};
+</script>
+</body>
+</html>
