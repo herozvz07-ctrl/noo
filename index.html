@@ -46,7 +46,6 @@
       <button class="nav-tab on" data-tab="news" onclick="goTab('news')"><i class="fas fa-newspaper"></i> <span data-ru="Новости" data-kg="Жаңылыктар">Новости</span></button>
       <button class="nav-tab" data-tab="market" onclick="goTab('market')"><i class="fas fa-store"></i> <span data-ru="Рынок" data-kg="Базар">Рынок</span></button>
       <button class="nav-tab" data-tab="jobs" onclick="goTab('jobs')"><i class="fas fa-briefcase"></i> <span data-ru="Вакансии" data-kg="Вакансиялар">Вакансии</span></button>
-      <button class="nav-tab" data-tab="chat" onclick="goTab('chat')"><i class="fas fa-comments"></i> <span data-ru="Чат" data-kg="Чат">Чат</span></button>
       <button class="nav-tab" data-tab="about" onclick="goTab('about')"><i class="fas fa-city"></i> <span data-ru="О городе" data-kg="Шаар жөнүндө">О городе</span></button>
       <button class="nav-tab" data-tab="contacts" onclick="goTab('contacts')"><i class="fas fa-address-book"></i> <span data-ru="Контакты" data-kg="Байланыштар">Контакты</span></button>
     </div>
@@ -92,44 +91,6 @@
     <div class="loader" id="jobsLoader"><div class="spinner"></div><p>Загрузка...</p></div>
     <div class="jobs-list" id="jobsList"></div>
     <div class="empty" id="jobsEmpty" style="display:none"><i class="fas fa-briefcase"></i><p data-ru="Вакансий пока нет" data-kg="Вакансиялар жок">Вакансий пока нет</p></div>
-  </div>
-
-  <!-- ЧАТ -->
-  <div class="section" id="sec-chat">
-    <div id="chatAuth" style="display:none" class="empty">
-      <i class="fas fa-lock"></i>
-      <p data-ru="Для доступа к чату нужно войти" data-kg="Чатка кирүү үчүн авторизация керек">Для доступа к чату нужно войти</p>
-      <button class="btn-full" style="max-width:200px;margin:12px auto 0" onclick="openModal('loginModal')">Войти</button>
-    </div>
-    <div id="chatSection" style="display:none">
-      <button class="chat-back-btn" id="chatBackBtn" onclick="showChatList()">
-        <i class="fas fa-arrow-left"></i> Назад к чатам
-      </button>
-      <div class="chat-layout" id="chatLayout">
-        <div class="chat-list" id="chatListPanel">
-          <div class="chat-list-header">💬 Сообщения</div>
-          <div id="chatListItems"></div>
-        </div>
-        <div class="chat-window" id="chatWindowPanel">
-          <div class="chat-empty" id="chatEmpty"><i class="fas fa-comments"></i><p>Выберите чат</p></div>
-          <div id="chatActive" style="display:none;height:100%;flex-direction:column">
-            <div class="chat-win-header">
-              <div class="chat-win-header-ava" id="chatWinAva"></div>
-              <div class="chat-win-header-name" id="chatWinName"></div>
-            </div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input-area">
-              <button class="chat-attach" title="Прикрепить фото">
-                <i class="fas fa-paperclip"></i>
-                <input type="file" accept="image/*" onchange="sendImg(event)">
-              </button>
-              <input class="chat-input" id="msgInput" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')sendMsg()">
-              <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- О ГОРОДЕ -->
@@ -211,6 +172,7 @@
       <div class="divider">или через email</div>
       <div class="form-group"><label>Email</label><input class="form-input" id="loginEmail" type="email" placeholder="your@email.com" autocomplete="email"></div>
       <div class="form-group"><label>Пароль</label><input class="form-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <div class="switch-link" style="margin-top:8px"><a onclick="resetPassword()">Забыли пароль?</a></div>
       <div class="error-box" id="loginErr"><i class="fas fa-exclamation-circle"></i><span></span></div>
       <button class="btn-full" style="margin-top:14px" onclick="emailLogin()">Войти</button>
       <div class="switch-link">Нет аккаунта? <a onclick="openModal('regModal');closeModal('loginModal')">Зарегистрироваться</a></div>
@@ -270,10 +232,6 @@
         <div class="phone-row">
           <select class="form-select country-code" id="countryCode">
             <option value="+996">🇰🇬 +996</option>
-            <option value="+7">🇷🇺 +7</option>
-            <option value="+998">🇺🇿 +998</option>
-            <option value="+992">🇹🇯 +992</option>
-            <option value="+380">🇺🇦 +380</option>
           </select>
           <input class="form-input" id="phoneNum" type="tel" placeholder="700 000 000" autocomplete="tel">
         </div>
@@ -407,10 +365,8 @@
       <img id="postModalImg" style="width:100%;border-radius:12px;margin-bottom:13px;display:none" alt="">
       <div style="font-size:.77rem;color:var(--text2);margin-bottom:11px" id="postModalDate"></div>
       <div id="postModalBody" style="line-height:1.8;font-size:.93rem;margin-bottom:15px;white-space:pre-wrap"></div>
+      <div id="postReactions" style="display:flex;flex-wrap:wrap;gap:6px;margin:13px 0"></div>
       <div id="postModalContacts"></div>
-      <button class="open-chat-btn" id="postChatBtn" style="display:none" onclick="startChatFromPost()">
-        <i class="fas fa-comments"></i> Написать продавцу
-      </button>
     </div>
   </div>
 </div>
@@ -418,7 +374,6 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-// Защита от просмотра ошибок в консоли
 window.onerror = () => true;
 window.onunhandledrejection = () => true;
 
@@ -426,12 +381,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
   signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber,
-  onAuthStateChanged, signOut, updateProfile, updatePassword
+  onAuthStateChanged, signOut, updateProfile, updatePassword,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import {
   getFirestore, collection, addDoc, query, orderBy, onSnapshot,
   deleteDoc, doc, updateDoc, increment, where, getDocs,
-  serverTimestamp, setDoc, getDoc
+  serverTimestamp, setDoc, getDoc, deleteField
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const _c = {
@@ -446,10 +402,7 @@ const app = initializeApp({apiKey:_c.k,authDomain:_c.d,projectId:_c.p,storageBuc
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// UID администратора — замените после первого входа
 const _A = "nF0RuTEUtSWF7jkxsJ3QoTsqOKm2";
-
-// Cloudinary
 const _CN = 'dsd7kqaon';
 const _UP = 'herrozzv';
 
@@ -473,10 +426,8 @@ async function uploadPhoto(file, onProgress) {
   });
 }
 
-// Состояние
 let _u = null, allNews = [], allMarket = [], allJobs = [];
-let _cat = 'all', _chatId = null, _chatUnsub = null;
-let _postData = null, _avaFile = null, _avaClicks = 0, _avaTimer = null;
+let _cat = 'all', _postData = null, _avaFile = null, _avaClicks = 0, _avaTimer = null;
 const _store = new Map();
 
 // === АВТОРИЗАЦИЯ ===
@@ -489,7 +440,6 @@ onAuthStateChanged(auth, async user => {
     avaBtn.style.display = 'block';
     avaBtn.src = user.photoURL || _ava(user.displayName);
     _updateProfileUI();
-    if (document.getElementById('sec-chat').classList.contains('on')) _showChat();
   } else {
     gBtns.style.display = 'flex';
     avaBtn.style.display = 'none';
@@ -515,27 +465,26 @@ window.handleAvaClick = () => {
   _avaClicks++;
   clearTimeout(_avaTimer);
   _avaTimer = setTimeout(() => _avaClicks = 0, 800);
-  if (_avaClicks >= 3) { _avaClicks = 0; }
   goTab('profile');
 };
 
 function _fbErr(code) {
   const m = {
-    'auth/email-already-in-use':   'Этот email уже зарегистрирован. Попробуйте войти.',
-    'auth/invalid-email':           'Введите корректный email адрес.',
-    'auth/wrong-password':          'Неверный пароль. Попробуйте ещё раз.',
-    'auth/invalid-credential':      'Неверный email или пароль.',
-    'auth/user-not-found':          'Пользователь с таким email не найден.',
-    'auth/weak-password':           'Пароль слишком простой. Используйте минимум 6 символов.',
-    'auth/too-many-requests':       'Слишком много попыток. Подождите несколько минут.',
-    'auth/network-request-failed':  'Ошибка соединения. Проверьте интернет.',
-    'auth/popup-closed-by-user':    'Окно входа было закрыто. Попробуйте снова.',
-    'auth/cancelled-popup-request': 'Вход отменён.',
-    'auth/configuration-not-found': 'Вход по телефону временно недоступен.',
-    'auth/invalid-phone-number':    'Введите корректный номер телефона.',
+    'auth/email-already-in-use':    'Этот email уже зарегистрирован. Попробуйте войти.',
+    'auth/invalid-email':            'Введите корректный email адрес.',
+    'auth/wrong-password':           'Неверный пароль. Попробуйте ещё раз.',
+    'auth/invalid-credential':       'Неверный email или пароль.',
+    'auth/user-not-found':           'Пользователь с таким email не найден.',
+    'auth/weak-password':            'Пароль слишком простой. Используйте минимум 6 символов.',
+    'auth/too-many-requests':        'Слишком много попыток. Подождите несколько минут.',
+    'auth/network-request-failed':   'Ошибка соединения. Проверьте интернет.',
+    'auth/popup-closed-by-user':     'Окно входа было закрыто. Попробуйте снова.',
+    'auth/cancelled-popup-request':  'Вход отменён.',
+    'auth/configuration-not-found':  'Вход по телефону временно недоступен.',
+    'auth/invalid-phone-number':     'Введите корректный номер телефона.',
     'auth/invalid-verification-code':'Неверный код из SMS. Проверьте и введите снова.',
-    'auth/code-expired':            'Код из SMS устарел. Запросите новый.',
-    'auth/requires-recent-login':   'Для этого действия войдите в аккаунт заново.',
+    'auth/code-expired':             'Код из SMS устарел. Запросите новый.',
+    'auth/requires-recent-login':    'Для этого действия войдите в аккаунт заново.',
   };
   return m[code] || 'Что-то пошло не так. Попробуйте снова.';
 }
@@ -553,11 +502,11 @@ function hideErrBox(id) {
 
 window.emailRegister = async () => {
   hideErrBox('regErr');
-  const name   = document.getElementById('regName').value.trim();
-  const surname= document.getElementById('regSurname').value.trim();
-  const email  = document.getElementById('regEmail').value.trim();
-  const pass   = document.getElementById('regPass').value;
-  const pass2  = document.getElementById('regPass2').value;
+  const name    = document.getElementById('regName').value.trim();
+  const surname = document.getElementById('regSurname').value.trim();
+  const email   = document.getElementById('regEmail').value.trim();
+  const pass    = document.getElementById('regPass').value;
+  const pass2   = document.getElementById('regPass2').value;
 
   if (!name)           { showErrBox('regErr','Введите ваше имя.'); return; }
   if (!email)          { showErrBox('regErr','Введите email адрес.'); return; }
@@ -578,9 +527,7 @@ window.emailRegister = async () => {
     const userRef = doc(db,'users',cred.user.uid);
     const userSnap = await getDoc(userRef);
     if (!userSnap.exists()) {
-      await setDoc(userRef, {
-        name, surname, email, photoURL: photoURL||null, createdAt: serverTimestamp()
-      });
+      await setDoc(userRef, { name, surname, email, photoURL: photoURL||null, createdAt: serverTimestamp() });
     }
     _avaFile = null;
     closeModal('regModal');
@@ -609,6 +556,17 @@ window.emailLogin = async () => {
     showErrBox('loginErr', _fbErr(e.code));
   }
   btn.disabled = false; btn.textContent = 'Войти';
+};
+
+window.resetPassword = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) { showErrBox('loginErr','Введите email чтобы сбросить пароль.'); return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showToast('ok','📧 Письмо отправлено! Проверьте папку "Спам"');
+  } catch(e) {
+    showErrBox('loginErr', _fbErr(e.code));
+  }
 };
 
 window.googleLogin = async () => {
@@ -657,7 +615,13 @@ window.verifyCode = async () => {
   const code = document.getElementById('smsCode').value.trim();
   if (!code) { showErrBox('phoneErr','Введите код из SMS.'); return; }
   try {
-    await window._confirm.confirm(code);
+    const result = await window._confirm.confirm(code);
+    const user = result.user;
+    const ref = doc(db,'users',user.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { name: user.displayName||'Пользователь', phone: user.phoneNumber, photoURL: null, createdAt: serverTimestamp() });
+    }
     closeModal('phoneModal');
     showToast('ok','✅ Вход выполнен!');
   } catch(e) {
@@ -702,7 +666,7 @@ window.publishNews = async () => {
       img = await uploadPhoto(file, p => { document.getElementById('newsUploadFill').style.width = p+'%'; });
       document.getElementById('newsUploadProgress').style.display = 'none';
     }
-    await addDoc(collection(db,'posts'), { title, text, img, date:serverTimestamp(), views:0, likes:0, hearts:0, fire:0, authorId:_u.uid });
+    await addDoc(collection(db,'posts'), { title, text, img, date:serverTimestamp(), authorId:_u.uid });
     closeModal('addNewsModal');
     ['newTitle','newText'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('newImg').value = '';
@@ -720,10 +684,10 @@ window.publishMarket = async () => {
   const waNum = document.getElementById('mktWa').value.trim();
   const file  = document.getElementById('mktImg').files[0];
 
-  if (!title)  { showToast('warn','⚠️ Введите название товара'); return; }
-  if (!price)  { showToast('warn','⚠️ Укажите цену товара'); return; }
-  if (!waNum)  { showToast('warn','⚠️ Укажите WhatsApp для связи'); return; }
-  if (!file)   { showToast('warn','⚠️ Добавьте фото товара'); return; }
+  if (!title) { showToast('warn','⚠️ Введите название товара'); return; }
+  if (!price) { showToast('warn','⚠️ Укажите цену товара'); return; }
+  if (!waNum) { showToast('warn','⚠️ Укажите WhatsApp для связи'); return; }
+  if (!file)  { showToast('warn','⚠️ Добавьте фото товара'); return; }
 
   const btn = document.getElementById('publishMarketBtn');
   btn.disabled = true; btn.textContent = '⏳ Публикация...';
@@ -742,7 +706,7 @@ window.publishMarket = async () => {
       wa:    document.getElementById('mktWaCode').value + waNum,
       phone: document.getElementById('mktPhCode').value + document.getElementById('mktPhone').value.trim(),
       tg:    document.getElementById('mktTg').value.trim(),
-      date:serverTimestamp(), views:0, likes:0,
+      date:serverTimestamp(),
       authorId:_u.uid, authorName:_u.displayName||'Аноним', authorPhoto:_u.photoURL||null
     });
     closeModal('addMarketModal');
@@ -777,7 +741,7 @@ window.publishJob = async () => {
       loc:    document.getElementById('jobLoc').value.trim(),
       phone:  document.getElementById('jobPhCode').value + phone,
       tg:     document.getElementById('jobTg').value.trim(),
-      date:serverTimestamp(), views:0,
+      date:serverTimestamp(),
       authorId:_u.uid, authorName:_u.displayName||'Аноним'
     });
     closeModal('addJobModal');
@@ -788,9 +752,9 @@ window.publishJob = async () => {
   btn.disabled = false; btn.textContent = '📤 Опубликовать вакансию';
 };
 
-onSnapshot(query(collection(db,'posts'),   orderBy('date','desc')), snap => { allNews   = snap.docs.map(d=>({id:d.id,...d.data()})); filterPosts();  document.getElementById('newsLoader').style.display='none'; });
-onSnapshot(query(collection(db,'market'),  orderBy('date','desc')), snap => { allMarket = snap.docs.map(d=>({id:d.id,...d.data()})); filterMarket(); document.getElementById('marketLoader').style.display='none'; });
-onSnapshot(query(collection(db,'jobs'),    orderBy('date','desc')), snap => { allJobs   = snap.docs.map(d=>({id:d.id,...d.data()})); filterJobs();   document.getElementById('jobsLoader').style.display='none'; });
+onSnapshot(query(collection(db,'posts'),  orderBy('date','desc')), {includeMetadataChanges:false}, snap => { allNews   = snap.docs.map(d=>({id:d.id,...d.data()})); filterPosts();  document.getElementById('newsLoader').style.display='none'; });
+onSnapshot(query(collection(db,'market'), orderBy('date','desc')), {includeMetadataChanges:false}, snap => { allMarket = snap.docs.map(d=>({id:d.id,...d.data()})); filterMarket(); document.getElementById('marketLoader').style.display='none'; });
+onSnapshot(query(collection(db,'jobs'),   orderBy('date','desc')), {includeMetadataChanges:false}, snap => { allJobs   = snap.docs.map(d=>({id:d.id,...d.data()})); filterJobs();   document.getElementById('jobsLoader').style.display='none'; });
 
 window.filterPosts  = () => { const q=document.getElementById('newsSearch').value.toLowerCase(); renderNews(allNews.filter(p=>p.title?.toLowerCase().includes(q)||p.text?.toLowerCase().includes(q))); };
 window.filterMarket = () => { const q=document.getElementById('marketSearch').value.toLowerCase(); let f=allMarket.filter(p=>p.title?.toLowerCase().includes(q)||p.desc?.toLowerCase().includes(q)); if(_cat!=='all') f=f.filter(p=>p.cat===_cat); renderMarket(f); };
@@ -798,7 +762,6 @@ window.filterJobs   = () => { const q=document.getElementById('jobsSearch').valu
 
 function _esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function _fmtD(d){ const now=new Date(),diff=now-d; if(diff<60000)return'только что'; if(diff<3600000)return Math.floor(diff/60000)+' мин назад'; if(diff<86400000)return Math.floor(diff/3600000)+' ч назад'; if(diff<604800000)return Math.floor(diff/86400000)+' д назад'; return d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'}); }
-function _fmtT(d){ return d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}); }
 function _fmtP(p){ return Number(p).toLocaleString('ru-RU')+' сом'; }
 
 function renderNews(posts) {
@@ -810,12 +773,12 @@ function renderNews(posts) {
     const ds=p.date?.toDate?_fmtD(p.date.toDate()):'';
     const isNew=p.date?.toDate&&(Date.now()-p.date.toDate().getTime())<86400000;
     return `<div class="news-card">
+      ${_u?.uid===_A?`
       <button class="three-dots" onclick="toggleDD('nd_${p.id}',event)"><i class="fas fa-ellipsis-v"></i></button>
       <div class="dropdown" id="nd_${p.id}">
         <div class="dropdown-item" onclick="sharePost('${p.id}')"><i class="fas fa-share-alt"></i> Поделиться</div>
-        <div class="dropdown-item red" onclick="reportPost()"><i class="fas fa-flag"></i> Пожаловаться</div>
-        ${_u?.uid===_A?`<div class="dropdown-item red" onclick="delPost('posts','${p.id}')"><i class="fas fa-trash"></i> Удалить</div>`:''}
-      </div>
+        <div class="dropdown-item red" onclick="delPost('posts','${p.id}')"><i class="fas fa-trash"></i> Удалить</div>
+      </div>`:''}
       ${p.img?`<img class="news-card-img" src="${p.img}" alt="" loading="lazy">`:''}
       <div class="news-card-body">
         <div class="news-card-meta">
@@ -824,14 +787,6 @@ function renderNews(posts) {
         </div>
         <h3 onclick="openNews('${p.id}')">${_esc(p.title)}</h3>
         <p class="news-card-text">${_esc((p.text||'').substring(0,110))}${(p.text||'').length>110?'...':''}</p>
-        <div class="news-card-footer">
-          <div class="reactions">
-            <button class="reaction-btn" onclick="react('posts','${p.id}','likes',this)">👍 ${p.likes||0}</button>
-            <button class="reaction-btn" onclick="react('posts','${p.id}','hearts',this)">❤️ ${p.hearts||0}</button>
-            <button class="reaction-btn" onclick="react('posts','${p.id}','fire',this)">🔥 ${p.fire||0}</button>
-          </div>
-          <div class="post-stats"><i class="fas fa-eye"></i> ${p.views||0}</div>
-        </div>
       </div>
     </div>`;
   }).join('');
@@ -860,7 +815,6 @@ function renderMarket(items) {
             <img class="seller-ava" src="${p.authorPhoto||_ava(p.authorName)}" alt="">
             ${_esc(p.authorName||'Аноним')}
           </div>
-          <div class="post-stats"><i class="fas fa-eye"></i> ${p.views||0}</div>
         </div>
       </div>
     </div>`).join('');
@@ -887,19 +841,8 @@ function renderJobs(jobs) {
       <div class="job-tags">${p.loc?`<span class="job-tag"><i class="fas fa-map-marker-alt"></i> ${_esc(p.loc)}</span>`:''}</div>
       <div class="job-foot">
         <span class="job-date">${p.date?.toDate?_fmtD(p.date.toDate()):''}</span>
-        <div class="post-stats"><i class="fas fa-eye"></i> ${p.views||0}</div>
       </div>
     </div>`).join('');
-}
-
-async function countView(coll, id, authorId) {
-  if (_u && _u.uid === authorId) return;
-  const key = `viewed_${coll}_${id}`;
-  if (localStorage.getItem(key)) return;
-  try {
-    await updateDoc(doc(db, coll, id), { views: increment(1) });
-    localStorage.setItem(key, Date.now());
-  } catch(e) {}
 }
 
 window.openNews = async (id) => {
@@ -911,9 +854,8 @@ window.openNews = async (id) => {
   const img = document.getElementById('postModalImg');
   p.img?(img.src=p.img,img.style.display='block'):img.style.display='none';
   document.getElementById('postModalContacts').innerHTML='';
-  document.getElementById('postChatBtn').style.display='none';
   openModal('postModal');
-  await countView('posts', id, p.authorId);
+  openReactionPanel(id);
 };
 
 window.openMarket = async (id) => {
@@ -929,9 +871,8 @@ window.openMarket = async (id) => {
   if(p.phone) c+=`<div class="post-contact-row"><i class="fas fa-phone" style="color:var(--success)"></i><a href="tel:${p.phone}">${_esc(p.phone)}</a></div>`;
   if(p.tg)    c+=`<div class="post-contact-row"><i class="fab fa-telegram" style="color:#0088cc"></i><span>${_esc(p.tg)}</span></div>`;
   document.getElementById('postModalContacts').innerHTML=c;
-  document.getElementById('postChatBtn').style.display=(p.authorId&&_u&&p.authorId!==_u.uid)?'flex':'none';
+  document.getElementById('postReactions').innerHTML='';
   openModal('postModal');
-  await countView('market', id, p.authorId);
 };
 
 window.openJob = async (id) => {
@@ -945,19 +886,57 @@ window.openJob = async (id) => {
   if(p.phone) c+=`<div class="post-contact-row"><i class="fas fa-phone" style="color:var(--success)"></i><a href="tel:${p.phone}">${_esc(p.phone)}</a></div>`;
   if(p.tg)    c+=`<div class="post-contact-row"><i class="fab fa-telegram" style="color:#0088cc"></i><span>${_esc(p.tg)}</span></div>`;
   document.getElementById('postModalContacts').innerHTML=c;
-  document.getElementById('postChatBtn').style.display=(p.authorId&&_u&&p.authorId!==_u.uid)?'flex':'none';
+  document.getElementById('postReactions').innerHTML='';
   openModal('postModal');
-  await countView('jobs', id, p.authorId);
 };
 
-window.react = async (coll,id,field,btn) => {
-  if(!_u){showToast('warn','⚠️ Войдите чтобы оставлять реакции');return;}
-  btn.classList.toggle('active');
-  try { await updateDoc(doc(db,coll,id),{[field]:increment(btn.classList.contains('active')?1:-1)}); } catch(e){}
+// === РЕАКЦИИ ===
+const EMOJIS = ['👍','👎','😑','😡','❤️','👌','😢','😭','😨','🤯','😱','🤡'];
+
+window.openReactionPanel = (postId) => {
+  const container = document.getElementById('postReactions');
+  const p = _store.get('n_'+postId);
+  const reactions = p?.reactions || {};
+  const myReaction = _u ? (p?.userReactions?.[_u.uid] || null) : null;
+  container.innerHTML = EMOJIS.map(emoji => {
+    const count = reactions[emoji] || 0;
+    const isActive = myReaction === emoji;
+    return `<button onclick="setReaction('${postId}','${emoji}')"
+      style="background:${isActive?'var(--primary)':'var(--bg)'};
+             color:${isActive?'#fff':'var(--text)'};
+             border:2px solid ${isActive?'var(--primary)':'var(--border)'};
+             border-radius:20px;padding:5px 10px;cursor:pointer;
+             font-size:.9rem;display:flex;align-items:center;gap:4px;
+             font-family:inherit;font-weight:700;transition:.2s">
+      ${emoji}${count>0?` <span style="font-size:.78rem">${count}</span>`:''}
+    </button>`;
+  }).join('');
+};
+
+window.setReaction = async (postId, emoji) => {
+  if(!_u){ showToast('warn','⚠️ Войдите чтобы оставлять реакции'); return; }
+  const p = _store.get('n_'+postId);
+  const myReaction = p?.userReactions?.[_u.uid] || null;
+  try {
+    const ref = doc(db,'posts',postId);
+    if(myReaction === emoji) {
+      await updateDoc(ref, {
+        [`reactions.${emoji}`]: increment(-1),
+        [`userReactions.${_u.uid}`]: deleteField()
+      });
+    } else {
+      const updates = {};
+      if(myReaction) updates[`reactions.${myReaction}`] = increment(-1);
+      updates[`reactions.${emoji}`] = increment(1);
+      updates[`userReactions.${_u.uid}`] = emoji;
+      await updateDoc(ref, updates);
+    }
+    openReactionPanel(postId);
+  } catch(e){ showToast('err','Не удалось поставить реакцию'); }
 };
 
 window.delPost = async (coll, id) => {
-  const p = _store.get(coll[0]+'_'+id) || _store.get(coll.substring(0,1)+'_'+id);
+  const p = _store.get(coll[0]+'_'+id);
   const isAdmin  = _u?.uid === _A;
   const isAuthor = _u?.uid === p?.authorId;
   if (!isAdmin && !isAuthor) { showToast('err','❌ Нет прав для удаления'); return; }
@@ -994,117 +973,6 @@ async function loadMyPosts() {
   } catch(e) { loader.style.display='none'; showToast('err','Не удалось загрузить публикации.'); }
 }
 
-function _showChat() {
-  if(!_u){ document.getElementById('chatAuth').style.display='flex'; document.getElementById('chatSection').style.display='none'; return; }
-  document.getElementById('chatAuth').style.display='none';
-  document.getElementById('chatSection').style.display='block';
-  _loadChatList();
-}
-
-function _loadChatList() {
-  const q=query(collection(db,'chats'),where('participants','array-contains',_u.uid),orderBy('lastTime','desc'));
-  onSnapshot(q, async snap => {
-    const list=document.getElementById('chatListItems');
-    if(!snap.docs.length){list.innerHTML='<div style="padding:14px;font-size:.83rem;color:var(--text2);text-align:center">Чатов пока нет</div>';return;}
-    let html='';
-    for(const d of snap.docs){
-      const data=d.data();
-      const otherId=data.participants.find(id=>id!==_u.uid);
-      try {
-        const os=await getDoc(doc(db,'users',otherId));
-        const o=os.data()||{};
-        const av=o.photoURL||_ava(o.name);
-        html+=`<div class="chat-item" onclick="openChat('${d.id}','${otherId}','${(o.name||'Пользователь').replace(/'/g,"\\'")}','${av}')">
-          <img class="chat-item-ava" src="${av}" alt="">
-          <div class="chat-item-info">
-            <div class="chat-item-name">${_esc(o.name||'Пользователь')}</div>
-            <div class="chat-item-last">${_esc(data.lastMsg||'')}</div>
-          </div>
-          <div class="chat-item-time">${data.lastTime?.toDate?_fmtT(data.lastTime.toDate()):''}</div>
-        </div>`;
-      } catch(e){}
-    }
-    list.innerHTML=html;
-  });
-}
-
-window.startChatFromPost = async () => {
-  if(!_u){openModal('loginModal');return;}
-  if(!_postData?.authorId) return;
-  closeModal('postModal');
-  goTab('chat');
-  try {
-    const os=await getDoc(doc(db,'users',_postData.authorId));
-    const o=os.data()||{};
-    openChat([_u.uid,_postData.authorId].sort().join('_'), _postData.authorId, o.name||'Пользователь', o.photoURL||_ava(o.name));
-  } catch(e){ showToast('err','Не удалось открыть чат.'); }
-};
-
-window.openChat = async (chatId, otherId, otherName, otherAva) => {
-  if(_chatUnsub){_chatUnsub();_chatUnsub=null;}
-  _chatId=chatId;
-
-  document.getElementById('chatEmpty').style.display='none';
-  const ca=document.getElementById('chatActive');
-  ca.style.display='flex';
-
-  const av=document.getElementById('chatWinAva');
-  av.style.backgroundImage=`url(${otherAva})`;
-  av.style.backgroundSize='cover';
-  av.style.backgroundPosition='center';
-  document.getElementById('chatWinName').textContent=otherName;
-
-  await setDoc(doc(db,'chats',chatId),{participants:[_u.uid,otherId],lastMsg:'',lastTime:serverTimestamp()},{merge:true});
-
-  _chatUnsub=onSnapshot(query(collection(db,'chats',chatId,'messages'),orderBy('time','asc')), snap=>{
-    const el=document.getElementById('chatMessages');
-    el.innerHTML=snap.docs.map(d=>{
-      const m=d.data(), mine=m.senderId===_u.uid;
-      if(m.img) return `<div class="msg ${mine?'mine':'other'}"><img class="msg-img" src="${m.img}" onclick="window.open('${m.img}','_blank')" alt=""><div class="msg-time">${m.time?.toDate?_fmtT(m.time.toDate()):''}</div></div>`;
-      return `<div class="msg ${mine?'mine':'other'}"><div class="msg-bubble">${_esc(m.text)}</div><div class="msg-time">${m.time?.toDate?_fmtT(m.time.toDate()):''}</div></div>`;
-    }).join('');
-    el.scrollTop=el.scrollHeight;
-  });
-
-  if(window.innerWidth<=768){
-    document.getElementById('chatListPanel').classList.add('mob-hide');
-    document.getElementById('chatWindowPanel').classList.remove('mob-hide');
-    document.getElementById('chatBackBtn').style.display='flex';
-  }
-};
-
-window.showChatList = () => {
-  if(_chatUnsub){_chatUnsub();_chatUnsub=null;}
-  document.getElementById('chatListPanel').classList.remove('mob-hide');
-  document.getElementById('chatWindowPanel').classList.add('mob-hide');
-  document.getElementById('chatBackBtn').style.display='none';
-  document.getElementById('chatActive').style.display='none';
-  document.getElementById('chatEmpty').style.display='flex';
-};
-
-window.sendMsg = async () => {
-  if(!_u||!_chatId) return;
-  const inp=document.getElementById('msgInput');
-  const text=inp.value.trim();
-  if(!text) return;
-  inp.value='';
-  await addDoc(collection(db,'chats',_chatId,'messages'),{text,senderId:_u.uid,time:serverTimestamp()});
-  await updateDoc(doc(db,'chats',_chatId),{lastMsg:text,lastTime:serverTimestamp()});
-};
-
-window.sendImg = async (e) => {
-  if(!_u||!_chatId) return;
-  const file=e.target.files[0]; if(!file) return;
-  showToast('warn','⏳ Отправляем фото...');
-  try {
-    const img=await uploadPhoto(file);
-    await addDoc(collection(db,'chats',_chatId,'messages'),{img,senderId:_u.uid,time:serverTimestamp()});
-    await updateDoc(doc(db,'chats',_chatId),{lastMsg:'📷 Фото',lastTime:serverTimestamp()});
-    showToast('ok','✅ Фото отправлено!');
-  } catch(er){ showToast('err','Не удалось отправить фото.'); }
-  e.target.value='';
-};
-
 window.switchProfileTab = (tab, btn) => {
   document.querySelectorAll('.profile-tab').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
@@ -1115,9 +983,9 @@ window.switchProfileTab = (tab, btn) => {
 
 window.saveSettings = async () => {
   if(!_u) return;
-  const name   = document.getElementById('settingsName').value.trim();
-  const surname= document.getElementById('settingsSurname').value.trim();
-  const pass   = document.getElementById('settingsPass').value;
+  const name    = document.getElementById('settingsName').value.trim();
+  const surname = document.getElementById('settingsSurname').value.trim();
+  const pass    = document.getElementById('settingsPass').value;
   if(!name){ showToast('warn','⚠️ Введите имя'); return; }
   try {
     const full=name+(surname?' '+surname:'');
@@ -1134,10 +1002,10 @@ window.saveSettings = async () => {
 window.handleFab = () => {
   if(!_u){openModal('loginModal');return;}
   const tab=document.querySelector('.nav-tab.on')?.dataset.tab;
-  if(tab==='market')                    openModal('addMarketModal');
-  else if(tab==='jobs')                 openModal('addJobModal');
-  else if(tab==='news'&&_u.uid===_A)    openModal('addNewsModal');
-  else if(tab==='news')                 showToast('warn','⚠️ Только администратор может публиковать новости');
+  if(tab==='market')                 openModal('addMarketModal');
+  else if(tab==='jobs')              openModal('addJobModal');
+  else if(tab==='news'&&_u.uid===_A) openModal('addNewsModal');
+  else if(tab==='news')              showToast('warn','⚠️ Только администратор может публиковать новости');
   else showToast('warn','⚠️ Перейдите на вкладку Рынок или Вакансии');
 };
 
@@ -1203,7 +1071,6 @@ window.goTab = (name) => {
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name)?.classList.add('on');
   document.querySelector(`.nav-tab[data-tab="${name}"]`)?.classList.add('on');
-  if(name==='chat')    _showChat();
   if(name==='profile') loadMyPosts();
   if(name==='news')    document.getElementById('newsSearch').value='';
   if(name==='market')  document.getElementById('marketSearch').value='';

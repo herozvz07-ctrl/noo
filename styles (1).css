@@ -48,10 +48,10 @@ nav{background:var(--card);border-bottom:1px solid var(--border)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* НОВОСТИ */
-.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.news-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;position:relative}
-.news-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
-.news-card-img{width:100%;height:185px;object-fit:cover;display:block;background:var(--bg)}
+.news-grid{display:flex;flex-direction:column;gap:0;max-width:600px;margin:0 auto}
+.news-card{background:var(--card);overflow:hidden;box-shadow:none;border-bottom:1px solid var(--border);border-radius:0;position:relative}
+.news-card:hover{transform:none;box-shadow:none}
+.news-card-img{width:100%;height:auto;object-fit:contain;display:block}
 .news-card-body{padding:14px}
 .news-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
 .news-card-date{font-size:.73rem;color:var(--text2);font-weight:600}
@@ -60,9 +60,6 @@ nav{background:var(--card);border-bottom:1px solid var(--border)}
 .news-card h3:hover{color:var(--primary)}
 .news-card-text{font-size:.83rem;color:var(--text2);margin-bottom:11px;line-height:1.5}
 .news-card-footer{display:flex;align-items:center;justify-content:space-between}
-.reactions{display:flex;gap:4px}
-.reaction-btn{background:var(--bg);border:none;padding:5px 8px;border-radius:20px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;gap:3px;color:var(--text2);font-weight:600;transition:.2s;font-family:inherit}
-.reaction-btn:hover,.reaction-btn.active{background:var(--primary);color:#fff}
 .post-stats{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--text2)}
 .three-dots{position:absolute;top:9px;right:9px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.45);border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;z-index:2}
 .three-dots:hover{background:rgba(0,0,0,.7)}
