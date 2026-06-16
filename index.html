@@ -3,528 +3,585 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ноокат - Новости & Объявления</title>
-  <meta name="description" content="Ноокат - портал новостей и объявлений района">
-  <meta name="theme-color" content="#1a1a1a">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Ноокат - Новости</title>
+  <meta name="description" content="Ноокат - портал новостей района">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- ВЕРХНЯЯ ПАНЕЛЬ -->
-<header class="top-bar">
-  <div class="top-bar-inner">
-    <div class="logo" onclick="goPage('news')">
-      <i class="fas fa-newspaper"></i>
-      <span>Ноокат</span>
+<!-- ШАПКА САЙТА -->
+<header class="header">
+  <div class="header-container">
+    <div class="header-left">
+      <h1 class="site-title">➤ НООКАТ НОВОСТИ</h1>
+      <p class="site-subtitle">Новостной портал | С 2009 года</p>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+    <div class="header-right">
+      <div class="date-widget">
+        <span id="currentDate"></span>
+      </div>
+      <button class="theme-btn" onclick="toggleTheme()" title="Переключить тему">
+        <i id="themeIcon" class="fas fa-sun"></i>
+      </button>
+    </div>
   </div>
 </header>
 
-<!-- ГЛАВНЫЙ КОНТЕНТ -->
-<main class="main-content">
+<!-- ГЛАВНОЕ МЕНЮ -->
+<nav class="main-nav">
+  <div class="nav-container">
+    <button class="nav-btn active" data-section="news">📰 Новости</button>
+    <button class="nav-btn" data-section="publish">✏️ Добавить новость</button>
+    <button class="nav-btn" data-section="profile">👤 Профиль</button>
+  </div>
+</nav>
 
-  <!-- НОВОСТИ -->
-  <div class="page" id="page-news">
-    <div class="page-header">
-      <h1>Новости</h1>
-      <input type="text" placeholder="🔍 Поиск..." id="newsSearch" oninput="filterNews()">
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<main class="container">
+
+  <!-- РАЗДЕЛ: НОВОСТИ -->
+  <section id="news" class="section active">
+    <div class="section-header">
+      <h2>📰 Последние новости</h2>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Поиск новостей..." oninput="filterNews()">
+        <i class="fas fa-search"></i>
+      </div>
     </div>
-    <div class="feed" id="newsFeed">
+
+    <div class="news-container" id="newsContainer">
       <!-- Новости загружаются здесь -->
     </div>
-  </div>
+  </section>
 
-  <!-- ОБЪЯВЛЕНИЯ -->
-  <div class="page" id="page-listings">
-    <div class="page-header">
-      <h1>Объявления</h1>
-      <div class="filter-tabs">
-        <button class="filter-btn active" data-filter="all" onclick="filterListings(this)">Все</button>
-        <button class="filter-btn" data-filter="buy" onclick="filterListings(this)">Продажа</button>
-        <button class="filter-btn" data-filter="job" onclick="filterListings(this)">Работа</button>
-      </div>
-      <input type="text" placeholder="🔍 Поиск..." id="listingSearch" oninput="filterListings()">
-    </div>
-    <div class="grid" id="listingGrid">
-      <!-- Объявления загружаются здесь -->
-    </div>
-  </div>
+  <!-- РАЗДЕЛ: ПУБЛИКАЦИЯ НОВОСТИ -->
+  <section id="publish" class="section">
+    <div class="publish-card">
+      <h2>✏️ Опубликовать новость</h2>
+      
+      <form id="publishForm" onsubmit="publishNews(event)">
+        <div class="form-group">
+          <label for="newsTitle">Заголовок новости:</label>
+          <input type="text" id="newsTitle" placeholder="Введите заголовок..." required maxlength="200">
+          <small>Макс. 200 символов</small>
+        </div>
 
-  <!-- СОЗДАТЬ ПОСТ -->
-  <div class="page" id="page-create">
-    <div class="create-card">
-      <h2>Опубликовать</h2>
-      <div class="create-tabs">
-        <button class="create-tab active" data-tab="news" onclick="switchCreateTab('news')">📰 Новость</button>
-        <button class="create-tab" data-tab="listing" onclick="switchCreateTab('listing')">🛍️ Объявление</button>
-      </div>
+        <div class="form-group">
+          <label for="newsText">Текст новости:</label>
+          <textarea id="newsText" placeholder="Напишите текст новости..." required rows="8"></textarea>
+          <small id="charCount">0 / 5000 символов</small>
+        </div>
 
-      <!-- ТАБ: НОВОСТЬ -->
-      <form id="newsForm" class="create-form active">
-        <input type="text" placeholder="Заголовок" id="newsTitle" required>
-        <textarea placeholder="Описание" id="newsText" rows="4" required></textarea>
-        <input type="file" accept="image/*" id="newsImg" placeholder="Выбери фото">
-        <button type="submit" onclick="publishNews(event)">Опубликовать новость</button>
-      </form>
+        <div class="form-group">
+          <label for="newsCategory">Категория:</label>
+          <select id="newsCategory" required>
+            <option value="">-- Выбрать категорию --</option>
+            <option value="политика">Политика</option>
+            <option value="спорт">Спорт</option>
+            <option value="культура">Культура</option>
+            <option value="бизнес">Бизнес</option>
+            <option value="технологии">Технологии</option>
+            <option value="здоровье">Здоровье</option>
+            <option value="общество">Общество</option>
+          </select>
+        </div>
 
-      <!-- ТАБ: ОБЪЯВЛЕНИЕ -->
-      <form id="listingForm" class="create-form">
-        <select id="listingType" required>
-          <option value="">Выбери тип объявления</option>
-          <option value="buy">💰 Продажа</option>
-          <option value="job">💼 Работа</option>
-          <option value="service">🔧 Услуги</option>
-        </select>
-        <input type="text" placeholder="Название" id="listingTitle" required>
-        <input type="text" placeholder="Цена (опционально)" id="listingPrice">
-        <textarea placeholder="Описание" id="listingDesc" rows="4" required></textarea>
-        <input type="file" accept="image/*" id="listingImg">
-        <input type="tel" placeholder="Телефон" id="listingPhone" required>
-        <button type="submit" onclick="publishListing(event)">Опубликовать объявление</button>
+        <div class="form-group">
+          <label for="newsSource">Источник/Автор:</label>
+          <input type="text" id="newsSource" placeholder="Ваше имя или источник" required maxlength="100">
+        </div>
+
+        <div class="form-group">
+          <label for="newsImage">Изображение (URL):</label>
+          <input type="url" id="newsImage" placeholder="Ссылка на изображение (опционально)">
+        </div>
+
+        <button type="submit" class="btn-submit">📤 Опубликовать новость</button>
       </form>
     </div>
-  </div>
+  </section>
 
-  <!-- ПРОФИЛЬ -->
-  <div class="page" id="page-profile">
+  <!-- РАЗДЕЛ: ПРОФИЛЬ -->
+  <section id="profile" class="section">
     <div class="profile-card">
-      <div class="profile-header">
-        <img id="profileImg" src="https://ui-avatars.com/api/?name=User" alt="">
-        <h2 id="profileName">Гость</h2>
-      </div>
-      <div class="profile-stats">
-        <div class="stat"><span id="postCount">0</span><p>Постов</p></div>
-        <div class="stat"><span id="viewCount">0</span><p>Просмотров</p></div>
-      </div>
-      <div class="profile-actions">
-        <button onclick="openAuth('login')">Войти</button>
-        <button onclick="openAuth('register')" class="btn-secondary">Регистрация</button>
+      <h2>👤 Ваш профиль</h2>
+      
+      <div id="profileContent">
+        <div class="profile-info">
+          <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="profile-details">
+            <h3 id="profileName">Гость</h3>
+            <p id="profileEmail">-</p>
+            <p id="profileDate">Зарегистрирован: -</p>
+          </div>
+        </div>
+
+        <div class="profile-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="newsCount">0</span>
+            <span class="stat-label">Опубликовано новостей</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="viewsCount">0</span>
+            <span class="stat-label">Просмотров</span>
+          </div>
+        </div>
+
+        <div id="authSection" class="auth-section">
+          <p>Войдите в профиль, чтобы отслеживать ваши новости</p>
+          <button class="btn-auth" onclick="showLoginModal()">🔐 Войти / Регистрация</button>
+        </div>
+
+        <div id="logoutSection" class="logout-section" style="display: none;">
+          <button class="btn-logout" onclick="logout()">🚪 Выход из профиля</button>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="my-news-card" id="myNewsCard" style="display: none;">
+      <h3>📰 Ваши новости</h3>
+      <div id="myNewsList" class="my-news-list">
+        <!-- Новости пользователя загружаются здесь -->
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<!-- НИЖНЯЯ НАВИГАЦИЯ -->
-<nav class="bottom-nav">
-  <button class="nav-item active" data-page="news" onclick="goPage('news')">
-    <i class="fas fa-newspaper"></i>
-    <span>Новости</span>
-  </button>
-  <button class="nav-item" data-page="listings" onclick="goPage('listings')">
-    <i class="fas fa-store"></i>
-    <span>Объявления</span>
-  </button>
-  <button class="nav-item" data-page="create" onclick="goPage('create')">
-    <i class="fas fa-plus"></i>
-    <span>Создать</span>
-  </button>
-  <button class="nav-item" data-page="profile" onclick="goPage('profile')">
-    <i class="fas fa-user"></i>
-    <span>Профиль</span>
-  </button>
-</nav>
-
-<!-- МОДАЛИ -->
-
-<!-- ПРОСМОТР ПОСТА -->
-<div class="modal" id="postModal">
+<!-- МОДАЛ: ПРОСМОТР НОВОСТИ -->
+<div class="modal" id="newsModal">
   <div class="modal-content">
-    <button class="modal-close" onclick="closeModal('postModal')">&times;</button>
-    <img id="postImg" src="" alt="">
+    <button class="modal-close" onclick="closeModal('newsModal')">&times;</button>
+    
+    <img id="modalImage" src="" alt="" class="modal-image">
+    
     <div class="modal-body">
-      <h2 id="postTitle"></h2>
-      <p id="postText"></p>
-      <div id="postMeta" class="post-meta"></div>
-      <div id="postContacts" class="post-contacts"></div>
+      <div class="modal-meta">
+        <span class="category-badge" id="modalCategory"></span>
+        <span class="date-badge" id="modalDate"></span>
+      </div>
+      
+      <h2 id="modalTitle"></h2>
+      
+      <div class="modal-text" id="modalText"></div>
+      
+      <div class="modal-footer">
+        <span class="source" id="modalSource"></span>
+        <span class="views" id="modalViews"></span>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ВХОД -->
+<!-- МОДАЛ: ВХОД/РЕГИСТРАЦИЯ -->
 <div class="modal" id="authModal">
   <div class="modal-content auth-modal">
     <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
-    <h2 id="authTitle">Вход</h2>
+    
+    <h2 id="authTitle">🔐 Вход</h2>
+    
     <form id="authForm" onsubmit="submitAuth(event)">
-      <input type="text" placeholder="Имя пользователя" id="authName" required>
-      <input type="email" placeholder="Email" id="authEmail" required>
-      <input type="password" placeholder="Пароль" id="authPassword" required>
-      <button type="submit" class="btn-primary">Войти</button>
+      <div class="form-group">
+        <input type="text" id="authUsername" placeholder="Имя пользователя" required maxlength="50">
+      </div>
+      
+      <div class="form-group">
+        <input type="email" id="authEmail" placeholder="Email" required>
+      </div>
+      
+      <div class="form-group">
+        <input type="password" id="authPassword" placeholder="Пароль" required minlength="6">
+      </div>
+      
+      <button type="submit" class="btn-submit">Войти</button>
     </form>
-    <p id="authSwitch" style="text-align:center;margin-top:10px;cursor:pointer">
-      Нет аккаунта? <a onclick="switchAuth()">Зарегистрироваться</a>
-    </p>
+    
+    <div class="auth-toggle">
+      <p id="authToggleText">Нет аккаунта? <a href="#" onclick="switchAuthMode(event)">Зарегистрироваться</a></p>
+    </div>
   </div>
 </div>
 
 <!-- УВЕДОМЛЕНИЕ -->
-<div class="toast" id="toast"></div>
+<div class="notification" id="notification">
+  <span id="notificationText"></span>
+</div>
+
+<!-- ПОДВАЛ -->
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2009-2024 НООКАТ NEWS • Новостной портал</p>
+    <p>Контакты: news@noocat.kg | Телефон: +996 (312) 12-34-56</p>
+  </div>
+</footer>
 
 <script>
-// ===== СОСТОЯНИЕ =====
-let currentPage = 'news';
-let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-let allNews = JSON.parse(localStorage.getItem('allNews')) || [];
-let allListings = JSON.parse(localStorage.getItem('allListings')) || [];
-let authMode = 'login';
+  // ===== СОСТОЯНИЕ =====
+  let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+  let allNews = JSON.parse(localStorage.getItem('allNews')) || [];
+  let authMode = 'login';
 
-// ===== ИНИЦИАЛИЗАЦИЯ =====
-document.addEventListener('DOMContentLoaded', () => {
-  loadTheme();
-  renderNews();
-  renderListings();
-  updateProfile();
-  
-  // Добавляем тестовые данные если пусто
-  if (allNews.length === 0) {
-    addSampleData();
-  }
-});
-
-function addSampleData() {
-  allNews = [
-    {
-      id: 1,
-      title: '🏗️ Строительство нового моста за��ершено',
-      text: 'Новый пешеходный мост через реку Нарын открыт для всех жителей города. Это значительно улучшит транспортное сообщение.',
-      image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=500&h=300&fit=crop',
-      date: new Date().toLocaleDateString('ru-RU'),
-      author: 'Новости района'
-    },
-    {
-      id: 2,
-      title: '🎓 Стипендия для студентов увеличена',
-      text: 'Размер социальной стипендии для студентов был увеличен на 25%. Об этом объявила администрация района.',
-      image: 'https://images.unsplash.com/photo-1427504494785-cdeb22cacac8?w=500&h=300&fit=crop',
-      date: new Date(Date.now() - 86400000).toLocaleDateString('ru-RU'),
-      author: 'Образование'
+  // ===== ИНИЦИАЛИЗАЦИЯ =====
+  document.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
+    updateDate();
+    renderNews();
+    updateProfile();
+    setupNavigation();
+    setupTextCounter();
+    
+    if (allNews.length === 0) {
+      addSampleData();
     }
-  ];
-  
-  allListings = [
-    {
-      id: 1,
-      type: 'buy',
-      title: '📱 iPhone 14 Pro Max',
-      desc: 'Состояние отличное, все работает. Продаю срочно.',
-      price: '80 000 сом',
-      phone: '+996 701 234 567',
-      image: 'https://images.unsplash.com/photo-1592286927505-1def25115558?w=500&h=300&fit=crop',
-      date: new Date().toLocaleDateString('ru-RU'),
-      author: 'Азиз'
-    },
-    {
-      id: 2,
-      type: 'job',
-      title: '💼 Ищем продавца-консультанта',
-      desc: 'Опыт работы приветствуется, но не обязателен. График 2/2, зарплата достойная.',
-      price: '15 000 сом/месяц',
-      phone: '+996 703 456 789',
-      date: new Date(Date.now() - 86400000).toLocaleDateString('ru-RU'),
-      author: 'ООО Торговля'
-    }
-  ];
-  
-  localStorage.setItem('allNews', JSON.stringify(allNews));
-  localStorage.setItem('allListings', JSON.stringify(allListings));
-}
-
-// ===== НАВИГАЦИЯ =====
-function goPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  
-  document.getElementById(`page-${page}`).classList.add('active');
-  document.querySelector(`[data-page="${page}"]`).classList.add('active');
-  
-  currentPage = page;
-}
-
-function switchCreateTab(tab) {
-  document.querySelectorAll('.create-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.create-form').forEach(f => f.classList.remove('active'));
-  
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-  document.getElementById(`${tab}Form`).classList.add('active');
-}
-
-// ===== НОВОСТИ =====
-function renderNews() {
-  const feed = document.getElementById('newsFeed');
-  feed.innerHTML = allNews.map(news => `
-    <div class="news-card" onclick="openPost('news', ${news.id})">
-      ${news.image ? `<img src="${news.image}" alt="">` : '<div class="no-img"></div>'}
-      <div class="news-content">
-        <h3>${escapeHtml(news.title)}</h3>
-        <p>${escapeHtml(news.text.substring(0, 100))}...</p>
-        <div class="news-meta">
-          <span>${news.date}</span>
-          <span>${news.author}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function filterNews() {
-  const query = document.getElementById('newsSearch').value.toLowerCase();
-  const filtered = allNews.filter(n => 
-    n.title.toLowerCase().includes(query) || 
-    n.text.toLowerCase().includes(query)
-  );
-  
-  const feed = document.getElementById('newsFeed');
-  feed.innerHTML = filtered.map(news => `
-    <div class="news-card" onclick="openPost('news', ${news.id})">
-      ${news.image ? `<img src="${news.image}" alt="">` : '<div class="no-img"></div>'}
-      <div class="news-content">
-        <h3>${escapeHtml(news.title)}</h3>
-        <p>${escapeHtml(news.text.substring(0, 100))}...</p>
-        <div class="news-meta">
-          <span>${news.date}</span>
-          <span>${news.author}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function publishNews(e) {
-  e.preventDefault();
-  
-  if (!currentUser) {
-    showToast('⚠️ Сначала войди в аккаунт', 'warn');
-    openAuth('login');
-    return;
-  }
-  
-  const title = document.getElementById('newsTitle').value;
-  const text = document.getElementById('newsText').value;
-  
-  const newNews = {
-    id: Date.now(),
-    title,
-    text,
-    image: 'https://images.unsplash.com/photo-1495399046969-fda540eee3f0?w=500&h=300&fit=crop',
-    date: new Date().toLocaleDateString('ru-RU'),
-    author: currentUser.name || 'Анонимно'
-  };
-  
-  allNews.unshift(newNews);
-  localStorage.setItem('allNews', JSON.stringify(allNews));
-  
-  document.getElementById('newsForm').reset();
-  renderNews();
-  showToast('✅ Новость опубликована!', 'success');
-}
-
-// ===== ОБЪЯВЛЕНИЯ =====
-function renderListings() {
-  const grid = document.getElementById('listingGrid');
-  grid.innerHTML = allListings.map(listing => `
-    <div class="listing-card" onclick="openPost('listing', ${listing.id})">
-      ${listing.image ? `<img src="${listing.image}" alt="">` : '<div class="no-img"></div>'}
-      <div class="listing-type">${getListingIcon(listing.type)}</div>
-      <div class="listing-content">
-        <h3>${escapeHtml(listing.title)}</h3>
-        ${listing.price ? `<p class="price">${listing.price}</p>` : ''}
-        <p>${escapeHtml(listing.desc.substring(0, 60))}...</p>
-        <div class="listing-meta">
-          <span>${listing.date}</span>
-          <span>📞 ${listing.phone}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function filterListings(btn = null) {
-  if (btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  
-  const filter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-  const query = document.getElementById('listingSearch')?.value.toLowerCase() || '';
-  
-  let filtered = allListings;
-  
-  if (filter !== 'all') {
-    filtered = filtered.filter(l => l.type === filter);
-  }
-  
-  if (query) {
-    filtered = filtered.filter(l => 
-      l.title.toLowerCase().includes(query) || 
-      l.desc.toLowerCase().includes(query)
-    );
-  }
-  
-  const grid = document.getElementById('listingGrid');
-  grid.innerHTML = filtered.map(listing => `
-    <div class="listing-card" onclick="openPost('listing', ${listing.id})">
-      ${listing.image ? `<img src="${listing.image}" alt="">` : '<div class="no-img"></div>'}
-      <div class="listing-type">${getListingIcon(listing.type)}</div>
-      <div class="listing-content">
-        <h3>${escapeHtml(listing.title)}</h3>
-        ${listing.price ? `<p class="price">${listing.price}</p>` : ''}
-        <p>${escapeHtml(listing.desc.substring(0, 60))}...</p>
-        <div class="listing-meta">
-          <span>${listing.date}</span>
-          <span>📞 ${listing.phone}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function publishListing(e) {
-  e.preventDefault();
-  
-  if (!currentUser) {
-    showToast('⚠️ Сначала войди в аккаунт', 'warn');
-    openAuth('login');
-    return;
-  }
-  
-  const type = document.getElementById('listingType').value;
-  const title = document.getElementById('listingTitle').value;
-  const desc = document.getElementById('listingDesc').value;
-  const price = document.getElementById('listingPrice').value;
-  const phone = document.getElementById('listingPhone').value;
-  
-  const newListing = {
-    id: Date.now(),
-    type,
-    title,
-    desc,
-    price,
-    phone,
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&h=300&fit=crop',
-    date: new Date().toLocaleDateString('ru-RU'),
-    author: currentUser.name || 'Анонимно'
-  };
-  
-  allListings.unshift(newListing);
-  localStorage.setItem('allListings', JSON.stringify(allListings));
-  
-  document.getElementById('listingForm').reset();
-  goPage('listings');
-  renderListings();
-  showToast('✅ Объявление опубликовано!', 'success');
-}
-
-function getListingIcon(type) {
-  const icons = {
-    buy: '💰',
-    job: '💼',
-    service: '🔧'
-  };
-  return icons[type] || '📌';
-}
-
-// ===== ПРОСМОТР ПОСТА =====
-function openPost(type, id) {
-  const modal = document.getElementById('postModal');
-  const data = type === 'news' ? allNews.find(n => n.id === id) : allListings.find(l => l.id === id);
-  
-  if (!data) return;
-  
-  document.getElementById('postImg').src = data.image || '';
-  document.getElementById('postTitle').textContent = data.title;
-  document.getElementById('postText').textContent = type === 'news' ? data.text : data.desc;
-  
-  let metaHTML = `<span>📅 ${data.date}</span>`;
-  if (type === 'listing' && data.phone) {
-    metaHTML += `<a href="tel:${data.phone}" class="contact-link">📞 ${data.phone}</a>`;
-  }
-  document.getElementById('postMeta').innerHTML = metaHTML;
-  
-  modal.classList.add('active');
-}
-
-// ===== ПРОФИЛЬ =====
-function updateProfile() {
-  if (currentUser) {
-    document.getElementById('profileName').textContent = currentUser.name;
-    document.getElementById('postCount').textContent = allNews.filter(n => n.author === currentUser.name).length + 
-                                                         allListings.filter(l => l.author === currentUser.name).length;
-  }
-}
-
-// ===== АВТОРИЗАЦИЯ =====
-function openAuth(mode) {
-  authMode = mode;
-  document.getElementById('authTitle').textContent = mode === 'login' ? 'Вход' : 'Регистрация';
-  document.getElementById('authSwitch').innerHTML = 
-    mode === 'login' 
-      ? 'Нет аккаунта? <a onclick="switchAuth()">Зарегистрироваться</a>'
-      : 'Уже есть аккаунт? <a onclick="switchAuth()">Войти</a>';
-  document.getElementById('authModal').classList.add('active');
-}
-
-function switchAuth() {
-  authMode = authMode === 'login' ? 'register' : 'login';
-  openAuth(authMode);
-}
-
-function submitAuth(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('authName').value;
-  const email = document.getElementById('authEmail').value;
-  
-  currentUser = { name, email, id: Date.now() };
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  
-  closeModal('authModal');
-  updateProfile();
-  showToast('✅ Успешно!', 'success');
-}
-
-// ===== МОДАЛИ =====
-function closeModal(id) {
-  document.getElementById(id).classList.remove('active');
-}
-
-// ===== ТЕМА =====
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-}
-
-function loadTheme() {
-  if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.remove('dark');
-  } else {
-    document.body.classList.add('dark');
-  }
-}
-
-// ===== УТИЛИТЫ =====
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function showToast(message, type = 'info') {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.className = `toast ${type} active`;
-  setTimeout(() => toast.classList.remove('active'), 3000);
-}
-
-// Закрытие модала при клике вне
-document.querySelectorAll('.modal').forEach(modal => {
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
   });
-});
+
+  // ===== НАВИГАЦИЯ =====
+  function setupNavigation() {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const section = btn.dataset.section;
+        showSection(section);
+        
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  }
+
+  function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
+  }
+
+  // ===== ДАТА И ВРЕМЯ =====
+  function updateDate() {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date().toLocaleDateString('ru-RU', options);
+    document.getElementById('currentDate').textContent = date;
+  }
+
+  // ===== НОВОСТИ =====
+  function renderNews() {
+    const container = document.getElementById('newsContainer');
+    const searchQuery = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    
+    let filtered = allNews;
+    if (searchQuery) {
+      filtered = allNews.filter(news => 
+        news.title.toLowerCase().includes(searchQuery) ||
+        news.text.toLowerCase().includes(searchQuery) ||
+        news.category.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="no-news">📭 Новостей не найдено</div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map(news => `
+      <article class="news-card" onclick="openNewsModal(${news.id})">
+        <div class="news-card-image">
+          ${news.image ? `<img src="${news.image}" alt="${news.title}">` : '<div class="no-image">📰</div>'}
+          <span class="category-label">${news.category}</span>
+        </div>
+        <div class="news-card-content">
+          <h3>${escapeHtml(news.title)}</h3>
+          <p>${escapeHtml(news.text.substring(0, 150))}...</p>
+          <div class="news-card-meta">
+            <span class="source-badge">👤 ${escapeHtml(news.source)}</span>
+            <span class="date-badge">📅 ${formatDate(news.date)}</span>
+            <span class="views-badge">👁️ ${news.views || 0}</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function filterNews() {
+    renderNews();
+  }
+
+  function publishNews(event) {
+    event.preventDefault();
+
+    if (!currentUser) {
+      showNotification('⚠️ Пожалуйста, войдите в профиль', 'warning');
+      showLoginModal();
+      return;
+    }
+
+    const title = document.getElementById('newsTitle').value;
+    const text = document.getElementById('newsText').value;
+    const category = document.getElementById('newsCategory').value;
+    const source = document.getElementById('newsSource').value;
+    const image = document.getElementById('newsImage').value || 'https://via.placeholder.com/600x400?text=Новость';
+
+    const newNews = {
+      id: Date.now(),
+      title,
+      text,
+      category,
+      source,
+      image,
+      date: new Date(),
+      views: 0,
+      author: currentUser.username
+    };
+
+    allNews.unshift(newNews);
+    localStorage.setItem('allNews', JSON.stringify(allNews));
+    
+    document.getElementById('publishForm').reset();
+    renderNews();
+    showNotification('✅ Новость успешно опубликована!', 'success');
+    
+    setTimeout(() => {
+      showSection('news');
+      document.querySelector('[data-section="news"]').click();
+    }, 1500);
+  }
+
+  function openNewsModal(newsId) {
+    const news = allNews.find(n => n.id === newsId);
+    if (!news) return;
+
+    news.views = (news.views || 0) + 1;
+    localStorage.setItem('allNews', JSON.stringify(allNews));
+
+    document.getElementById('modalImage').src = news.image;
+    document.getElementById('modalTitle').textContent = news.title;
+    document.getElementById('modalText').textContent = news.text;
+    document.getElementById('modalCategory').textContent = '📂 ' + news.category;
+    document.getElementById('modalDate').textContent = '📅 ' + formatDate(news.date);
+    document.getElementById('modalSource').textContent = '👤 ' + escapeHtml(news.source);
+    document.getElementById('modalViews').textContent = '👁️ ' + news.views + ' просмотров';
+
+    document.getElementById('newsModal').classList.add('active');
+  }
+
+  // ===== ПРОФИЛЬ =====
+  function updateProfile() {
+    if (currentUser) {
+      document.getElementById('profileName').textContent = currentUser.username;
+      document.getElementById('profileEmail').textContent = currentUser.email;
+      document.getElementById('profileDate').textContent = 'Зарегистрирован: ' + formatDate(new Date(currentUser.registeredDate));
+      
+      const userNews = allNews.filter(n => n.author === currentUser.username);
+      document.getElementById('newsCount').textContent = userNews.length;
+      document.getElementById('viewsCount').textContent = userNews.reduce((sum, n) => sum + (n.views || 0), 0);
+      
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('logoutSection').style.display = 'block';
+      document.getElementById('myNewsCard').style.display = 'block';
+      
+      renderUserNews(userNews);
+    } else {
+      document.getElementById('profileName').textContent = 'Гость';
+      document.getElementById('profileEmail').textContent = '-';
+      document.getElementById('profileDate').textContent = 'Зарегистрирован: -';
+      document.getElementById('newsCount').textContent = '0';
+      document.getElementById('viewsCount').textContent = '0';
+      
+      document.getElementById('authSection').style.display = 'block';
+      document.getElementById('logoutSection').style.display = 'none';
+      document.getElementById('myNewsCard').style.display = 'none';
+    }
+  }
+
+  function renderUserNews(userNews) {
+    const container = document.getElementById('myNewsList');
+    if (userNews.length === 0) {
+      container.innerHTML = '<p class="no-news-text">Вы еще не опубликовали новостей</p>';
+      return;
+    }
+
+    container.innerHTML = userNews.map(news => `
+      <div class="user-news-item">
+        <div class="user-news-title">${escapeHtml(news.title)}</div>
+        <div class="user-news-meta">
+          <span>📅 ${formatDate(news.date)}</span>
+          <span>👁️ ${news.views || 0}</span>
+          <button class="btn-delete" onclick="deleteNews(${news.id})">🗑️ Удалить</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function deleteNews(newsId) {
+    if (!confirm('Вы уверены, что хотите удалить эту новость?')) return;
+    
+    allNews = allNews.filter(n => n.id !== newsId);
+    localStorage.setItem('allNews', JSON.stringify(allNews));
+    
+    renderNews();
+    updateProfile();
+    showNotification('✅ Новость удалена', 'success');
+  }
+
+  // ===== АВТОРИЗАЦИЯ =====
+  function showLoginModal() {
+    authMode = 'login';
+    document.getElementById('authTitle').textContent = '🔐 Вход';
+    document.getElementById('authForm').reset();
+    document.getElementById('authToggleText').innerHTML = 'Нет аккаунта? <a href="#" onclick="switchAuthMode(event)">Зарегистрироваться</a>';
+    document.getElementById('authModal').classList.add('active');
+  }
+
+  function switchAuthMode(event) {
+    event.preventDefault();
+    authMode = authMode === 'login' ? 'register' : 'login';
+    if (authMode === 'login') {
+      document.getElementById('authTitle').textContent = '🔐 Вход';
+      document.getElementById('authToggleText').innerHTML = 'Нет аккаунта? <a href="#" onclick="switchAuthMode(event)">Зарегистрироваться</a>';
+    } else {
+      document.getElementById('authTitle').textContent = '📝 Регистрация';
+      document.getElementById('authToggleText').innerHTML = 'Уже есть аккаунт? <a href="#" onclick="switchAuthMode(event)">Войти</a>';
+    }
+  }
+
+  function submitAuth(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('authUsername').value;
+    const email = document.getElementById('authEmail').value;
+    const password = document.getElementById('authPassword').value;
+
+    currentUser = {
+      username,
+      email,
+      registeredDate: new Date(),
+      id: Date.now()
+    };
+
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    closeModal('authModal');
+    updateProfile();
+    
+    showNotification(authMode === 'login' ? '✅ Вы вошли в профиль!' : '✅ Профиль создан!', 'success');
+  }
+
+  function logout() {
+    if (!confirm('Вы уверены, что хотите выйти?')) return;
+    
+    localStorage.removeItem('currentUser');
+    currentUser = null;
+    updateProfile();
+    showNotification('✅ Вы вышли из профиля', 'success');
+  }
+
+  // ===== УТИЛИТЫ =====
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function formatDate(date) {
+    const d = new Date(date);
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return d.toLocaleDateString('ru-RU', options);
+  }
+
+  function showNotification(message, type = 'info') {
+    const notification = document.getElementById('notification');
+    document.getElementById('notificationText').textContent = message;
+    notification.className = `notification ${type} active`;
+    setTimeout(() => notification.classList.remove('active'), 3000);
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+  }
+
+  function setupTextCounter() {
+    const textarea = document.getElementById('newsText');
+    if (textarea) {
+      textarea.addEventListener('input', () => {
+        const count = textarea.value.length;
+        document.getElementById('charCount').textContent = count + ' / 5000 символов';
+        if (count > 5000) {
+          textarea.value = textarea.value.substring(0, 5000);
+        }
+      });
+    }
+  }
+
+  // ===== ТЕМА =====
+  function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+    updateThemeIcon();
+  }
+
+  function loadTheme() {
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-theme');
+    }
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    const icon = document.getElementById('themeIcon');
+    if (document.body.classList.contains('dark-theme')) {
+      icon.className = 'fas fa-moon';
+    } else {
+      icon.className = 'fas fa-sun';
+    }
+  }
+
+  // ===== ПРИМЕРЫ ДАННЫХ =====
+  function addSampleData() {
+    allNews = [
+      {
+        id: 1,
+        title: '🏢 Открыт новый торговый центр в центре города',
+        text: 'После года строительства открыт крупнейший торговый центр в регионе. Здесь разместились более 150 магазинов, кафе и развлекательных заведений. На церемонии открытия присутствовали представители администрации города и бизнес-сообщества.',
+        category: 'Бизнес',
+        source: 'Новости города',
+        image: 'https://via.placeholder.com/600x400?text=Торговый+центр',
+        date: new Date(Date.now() - 86400000),
+        views: 432,
+        author: 'Новости города'
+      },
+      {
+        id: 2,
+        title: '⚽ Локомотив выиграл чемпионат региона',
+        text: 'Местная футбольная команда "Локомотив" стала чемпионом региона, победив в финале со счетом 3:1. Болельщики устроили масштабное торжество на главной площади города.',
+        category: 'Спорт',
+        source: 'Спорт-сегодня',
+        image: 'https://via.placeholder.com/600x400?text=Спорт',
+        date: new Date(Date.now() - 172800000),
+        views: 856,
+        author: 'Спорт-сегодня'
+      },
+      {
+        id: 3,
+        title: '🎭 Театральный фестиваль привлек тысячи зрителей',
+        text: 'Двухнедельный театральный фестиваль завершился грандиозным финалом. На сцене выступили известные театральные коллективы из разных регионов страны.',
+        category: 'Культура',
+        source: 'Культурные новости',
+        image: 'https://via.placeholder.com/600x400?text=Театр',
+        date: new Date(Date.now() - 259200000),
+        views: 234,
+        author: 'Культурные новости'
+      }
+    ];
+    
+    localStorage.setItem('allNews', JSON.stringify(allNews));
+  }
+
+  // Закрытие модалей при клике вне
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+  });
 </script>
 
 </body>
